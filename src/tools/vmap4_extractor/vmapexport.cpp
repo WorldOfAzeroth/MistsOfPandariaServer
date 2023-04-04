@@ -53,22 +53,23 @@
 HANDLE WorldMpq = nullptr;
 HANDLE LocaleMpq = nullptr;
 
-uint32 CONF_TargetBuild = 15595;              // 4.3.4.15595
+uint32 CONF_TargetBuild = 18273;              // 5.4.8.18273
 
 // List MPQ for extract maps from
 char const* CONF_mpq_list[]=
 {
     "world.MPQ",
-    "art.MPQ",
+    "model.MPQ", // added in 5.x.x
+    "misc.MPQ", // added in 5.x.x
     "expansion1.MPQ",
     "expansion2.MPQ",
     "expansion3.MPQ",
-    "world2.MPQ",
+    "expansion4.MPQ", // added in 5.x.x
 };
 
-uint32 const Builds[] = {13164, 13205, 13287, 13329, 13596, 13623, 13914, 14007, 14333, 14480, 14545, 15005, 15050, 15211, 15354, 15595, 0};
-#define LAST_DBC_IN_DATA_BUILD 13623    // after this build mpqs with dbc are back to locale folder
-#define NEW_BASE_SET_BUILD  15211
+uint32 const Builds[] = {16016, 16048, 16057, 16309, 16357, 16516, 16650, 16844, 16965, 17116, 17266, 17325, 17345, 17538, 17645, 17688, 17898, 18273, 0};
+#define LAST_DBC_IN_DATA_BUILD 15595    // after this build mpqs with dbc are back to locale folder
+#define NEW_BASE_SET_BUILD 16016 // 15211
 
 #define LOCALES_COUNT 15
 
@@ -162,7 +163,7 @@ bool LoadLocaleMPQFile(int locale)
         else
         {
             prefix = Locales[locale];
-            _stprintf(buff, _T("%swow-update-%u.MPQ"), input_path, Builds[i]);
+            _stprintf(buff, _T("%swow-update-base-%u.MPQ"), input_path, Builds[i]);
         }
 
         if (!SFileOpenPatchArchive(LocaleMpq, buff, prefix, 0))
@@ -517,7 +518,7 @@ int main(int argc, char ** argv)
     Trinity::Banner::Show("VMAP data extractor", [](char const* text) { printf("%s\n", text); }, nullptr);
 
     bool success = true;
-    const char *versionString = "V4.05 2018_03";
+    const char *versionString = "V5.4.8 2022_03";
 
     // Use command line arguments, when some
     if (!processArgv(argc, argv, versionString))
@@ -595,7 +596,7 @@ int main(int argc, char ** argv)
 
             strncpy(m.name, map_name, max_map_name_length);
             m.name[max_map_name_length - 1] = '\0';
-            m.parent_id = int16(record.getInt(19));
+            m.parent_id = int16(record.getInt(18));
             if (m.parent_id >= 0)
                 maps_that_are_parents.insert(m.parent_id);
 

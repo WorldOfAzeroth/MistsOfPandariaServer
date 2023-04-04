@@ -319,7 +319,7 @@ std::unordered_map<uint32, std::vector<uint32>> LoadMap(std::string const& local
     DBCFileLoader* mapDbc = new DBCFileLoader;
     std::unordered_map<uint32, std::vector<uint32>> mapData;
     std::string mapSource = (boost::filesystem::path("dbc") / locale / "Map.dbc").string();
-    char const* mapFmt = "nxxxxxxxxxxxxxxxxxxi";
+    char const* mapFmt = "nxxxxxxxxxxxxxxxxxi";
 
     if (mapDbc->Load(mapSource.c_str(), mapFmt))
     {
@@ -327,7 +327,7 @@ std::unordered_map<uint32, std::vector<uint32>> LoadMap(std::string const& local
         {
             DBCFileLoader::Record record = mapDbc->getRecord(x);
             mapData.emplace(std::piecewise_construct, std::forward_as_tuple(record.getUInt(0)), std::forward_as_tuple());
-            int16 parentMapId = int16(record.getUInt(19));
+            int16 parentMapId = int16(record.getUInt(18));
             if (parentMapId != -1)
                 mapData[parentMapId].push_back(record.getUInt(0));
 
