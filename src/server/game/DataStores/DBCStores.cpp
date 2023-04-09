@@ -40,6 +40,9 @@ typedef std::map<uint32, uint32> AreaFlagByMapID;
 typedef std::tuple<int16, int8, int32> WMOAreaTableKey;
 typedef std::map<WMOAreaTableKey, WMOAreaTableEntry const*> WMOAreaInfoByTripple;
 typedef std::multimap<uint32, CharSectionsEntry const*> CharSectionsMap;
+typedef std::vector<TalentEntry const*> TalentsByPosition[MAX_CLASSES][MAX_TALENT_TIERS][MAX_TALENT_COLUMNS];
+typedef ChrSpecializationEntry const* ChrSpecializationByIndexContainer[MAX_CLASSES + 1][MAX_SPECIALIZATIONS];
+
 
 DBCStorage <AreaTableEntry> sAreaTableStore(AreaTableEntryfmt);
 DBCStorage <AreaGroupEntry> sAreaGroupStore(AreaGroupEntryfmt);
@@ -66,6 +69,7 @@ DBCStorage <ChatChannelsEntry> sChatChannelsStore(ChatChannelsEntryfmt);
 DBCStorage <ChrClassesEntry> sChrClassesStore(ChrClassesEntryfmt);
 DBCStorage <ChrRacesEntry> sChrRacesStore(ChrRacesEntryfmt);
 DBCStorage <ChrPowerTypesEntry> sChrPowerTypesStore(ChrClassesXPowerTypesfmt);
+DBCStorage <ChrSpecializationEntry> sChrSpecializationStore(ChrSpecializationEntryfmt);
 DBCStorage <CinematicCameraEntry> sCinematicCameraStore(CinematicCameraEntryfmt);
 DBCStorage <CinematicSequencesEntry> sCinematicSequencesStore(CinematicSequencesEntryfmt);
 DBCStorage <CreatureDisplayInfoEntry> sCreatureDisplayInfoStore(CreatureDisplayInfofmt);
@@ -75,12 +79,14 @@ DBCStorage <CreatureModelDataEntry> sCreatureModelDataStore(CreatureModelDatafmt
 DBCStorage <CreatureSpellDataEntry> sCreatureSpellDataStore(CreatureSpellDatafmt);
 DBCStorage <CreatureTypeEntry> sCreatureTypeStore(CreatureTypefmt);
 DBCStorage <CurrencyTypesEntry> sCurrencyTypesStore(CurrencyTypesfmt);
+
 uint32 PowersByClass[MAX_CLASSES][MAX_POWERS];
 
 DBCStorage <DestructibleModelDataEntry> sDestructibleModelDataStore(DestructibleModelDatafmt);
 DBCStorage <DungeonEncounterEntry> sDungeonEncounterStore(DungeonEncounterfmt);
 DBCStorage <DurabilityQualityEntry> sDurabilityQualityStore(DurabilityQualityfmt);
 DBCStorage <DurabilityCostsEntry> sDurabilityCostsStore(DurabilityCostsfmt);
+DBCStorage<DifficultyEntry> sDifficultyStore(Difficultyfmt);
 
 DBCStorage <EmotesEntry> sEmotesStore(EmotesEntryfmt);
 DBCStorage <EmotesTextEntry> sEmotesTextStore(EmotesTextEntryfmt);
@@ -162,8 +168,6 @@ DBCStorage <MountCapabilityEntry> sMountCapabilityStore(MountCapabilityfmt);
 DBCStorage <MountTypeEntry> sMountTypeStore(MountTypefmt);
 
 NameGenVectorArraysMap sGenNameVectoArraysMap;
-DBCStorage <NumTalentsAtLevelEntry> sNumTalentsAtLevelStore(NumTalentsAtLevelfmt);
-
 typedef std::array<std::vector<Trinity::wregex>, TOTAL_LOCALES> NameValidationRegexContainer;
 NameValidationRegexContainer NamesProfaneValidators;
 NameValidationRegexContainer NamesReservedValidators;
@@ -190,9 +194,12 @@ DBCStorage <SkillTiersEntry> sSkillTiersStore(SkillTiersfmt);
 
 DBCStorage <SoundEntriesEntry> sSoundEntriesStore(SoundEntriesfmt);
 
+DBCStorage <SpecializationSpellsEntry> sSpecializationSpellsStore(SpecializationSpellsfmt);
 DBCStorage <SpellItemEnchantmentEntry> sSpellItemEnchantmentStore(SpellItemEnchantmentfmt);
 DBCStorage <SpellItemEnchantmentConditionEntry> sSpellItemEnchantmentConditionStore(SpellItemEnchantmentConditionfmt);
 DBCStorage <SpellEntry> sSpellStore(SpellEntryfmt);
+DBCStorage <SpellMiscEntry> sSpellMiscStore(SpellMiscfmt);
+
 PetFamilySpellsStore sPetFamilySpellsStore;
 
 DBCStorage <ResearchBranchEntry> sResearchBranchStore(ResearchBranchEntryfmt);
@@ -200,8 +207,8 @@ DBCStorage <ResearchFieldEntry>  sResearchFieldStore(ResearchFieldEntryfmt);
 DBCStorage <ResearchProjectEntry> sResearchProjectStore(ResearchProjectEntryfmt);
 DBCStorage <ResearchSiteEntry>  sResearchSiteStore(ResearchSiteEntryfmt);
 
-DBCStorage <SpellReagentsEntry> sSpellReagentsStore(SpellReagentsEntryfmt);
 DBCStorage <SpellScalingEntry> sSpellScalingStore(SpellScalingEntryfmt);
+DBCStorage <SpellEffectScalingEntry> sSpellEffectScalingStore(SpellEffectScalingEntryfmt);
 DBCStorage <SpellTotemsEntry> sSpellTotemsStore(SpellTotemsEntryfmt);
 DBCStorage <SpellTargetRestrictionsEntry> sSpellTargetRestrictionsStore(SpellTargetRestrictionsEntryfmt);
 DBCStorage <SpellPowerEntry> sSpellPowerStore(SpellPowerEntryfmt);
@@ -225,18 +232,8 @@ DBCStorage <SpellRangeEntry> sSpellRangeStore(SpellRangefmt);
 DBCStorage <SpellRuneCostEntry> sSpellRuneCostStore(SpellRuneCostfmt);
 DBCStorage <SpellShapeshiftEntry> sSpellShapeshiftStore(SpellShapeshiftEntryfmt);
 DBCStorage <SpellShapeshiftFormEntry> sSpellShapeshiftFormStore(SpellShapeshiftFormfmt);
-DBCStorage <SpellVisualEntry> sSpellVisualStore(SpellVisualfmt);
-DBCStorage <SpellVisualKitEntry> sSpellVisualKitStore(SpellVisualKitfmt);
 DBCStorage <SummonPropertiesEntry> sSummonPropertiesStore(SummonPropertiesfmt);
 DBCStorage <TalentEntry> sTalentStore(TalentEntryfmt);
-TalentSpellPosMap sTalentSpellPosMap;
-DBCStorage <TalentTabEntry> sTalentTabStore(TalentTabEntryfmt);
-typedef std::map<uint32, std::vector<uint32>> TalentTreePrimarySpellsMap;
-TalentTreePrimarySpellsMap sTalentTreePrimarySpellsMap;
-
-// store absolute bit position for first rank for talent inspect
-static uint32 sTalentTabPages[MAX_CLASSES][3];
-
 DBCStorage <TaxiNodesEntry> sTaxiNodesStore(TaxiNodesEntryfmt);
 TaxiMask sTaxiNodesMask;
 TaxiMask sOldContinentsNodesMask;
@@ -264,6 +261,10 @@ DBCStorage <WorldSafeLocsEntry> sWorldSafeLocsStore(WorldSafeLocsEntryfmt);
 DBCStorage <PhaseEntry> sPhaseStore(PhaseEntryfmt);
 
 PhaseGroupContainer sPhasesByGroup;
+TalentsByPosition _talentsByPosition;
+ChrSpecializationByIndexContainer _chrSpecializationsByIndex;
+
+
 
 typedef std::list<std::string> StoreProblemList;
 
@@ -347,7 +348,6 @@ void DBCManager::LoadStores(const std::string& dataPath, uint32 defaultLocale)
     DBCStorage<NamesProfanityEntry> sNamesProfanityStore(NamesProfanityEntryfmt);
     DBCStorage<NamesReservedEntry> sNamesReservedStore(NamesReservedEntryfmt);
     DBCStorage<PhaseGroupEntry> sPhaseGroupStore(PhaseGroupfmt);
-    DBCStorage<TalentTreePrimarySpellsEntry> sTalentTreePrimarySpellsStore(TalentTreePrimarySpellsfmt);
 
 #define LOAD_DBC(store, file) LoadDBC(availableDbcLocales, bad_dbc_files, store, dbcPath, file, defaultLocale)
 
@@ -370,6 +370,7 @@ void DBCManager::LoadStores(const std::string& dataPath, uint32 defaultLocale)
     LOAD_DBC(sChrClassesStore,                    "ChrClasses.dbc");//15595
     LOAD_DBC(sChrRacesStore,                      "ChrRaces.dbc");//15595
     LOAD_DBC(sChrPowerTypesStore,                 "ChrClassesXPowerTypes.dbc");//15595
+    LOAD_DBC(sChrSpecializationStore,             "ChrSpecialization.dbc");//15595
     LOAD_DBC(sEmotesTextSoundStore,               "EmotesTextSound.dbc");
     LOAD_DBC(sCinematicCameraStore,               "CinematicCamera.dbc");
     LOAD_DBC(sCinematicSequencesStore,            "CinematicSequences.dbc");//15595
@@ -384,6 +385,7 @@ void DBCManager::LoadStores(const std::string& dataPath, uint32 defaultLocale)
     LOAD_DBC(sDungeonEncounterStore,              "DungeonEncounter.dbc");//15595
     LOAD_DBC(sDurabilityCostsStore,               "DurabilityCosts.dbc");//15595
     LOAD_DBC(sDurabilityQualityStore,             "DurabilityQuality.dbc");//15595
+    LOAD_DBC(sDifficultyStore,                    "Difficulty.dbc");
     LOAD_DBC(sEmotesStore,                        "Emotes.dbc");//15595
     LOAD_DBC(sEmotesTextStore,                    "EmotesText.dbc");//15595
     LOAD_DBC(sFactionStore,                       "Faction.dbc");//15595
@@ -445,7 +447,6 @@ void DBCManager::LoadStores(const std::string& dataPath, uint32 defaultLocale)
     LOAD_DBC(sMapDifficultyStore,                 "MapDifficulty.dbc");//15595
     LOAD_DBC(sMountCapabilityStore,               "MountCapability.dbc");//15595
     LOAD_DBC(sMountTypeStore,                     "MountType.dbc");//15595
-    LOAD_DBC(sNumTalentsAtLevelStore,             "NumTalentsAtLevel.dbc");//15595
     LOAD_DBC(sMovieStore,                         "Movie.dbc");//15595
     LOAD_DBC(sOverrideSpellDataStore,             "OverrideSpellData.dbc");//15595
     LOAD_DBC(sNamesProfanityStore,                "NamesProfanity.dbc");
@@ -472,10 +473,11 @@ void DBCManager::LoadStores(const std::string& dataPath, uint32 defaultLocale)
     LOAD_DBC(sSkillRaceClassInfoStore,            "SkillRaceClassInfo.dbc");
     LOAD_DBC(sSkillTiersStore,                    "SkillTiers.dbc");
     LOAD_DBC(sSoundEntriesStore,                  "SoundEntries.dbc");//15595
+    LOAD_DBC(sSpecializationSpellsStore,          "SpecializationSpells.dbc");//15595
     LOAD_DBC(sSpellCategoriesStore,               "SpellCategories.dbc");//15595
     LOAD_DBC(sSpellCategoryStore,                 "SpellCategory.dbc");
-    LOAD_DBC(sSpellReagentsStore,                 "SpellReagents.dbc");//15595
     LOAD_DBC(sSpellScalingStore,                  "SpellScaling.dbc");//15595
+    LOAD_DBC(sSpellEffectScalingStore,            "SpellEffectScaling.dbc");//15595
     LOAD_DBC(sSpellTotemsStore,                   "SpellTotems.dbc");//15595
     LOAD_DBC(sSpellTargetRestrictionsStore,       "SpellTargetRestrictions.dbc");//15595
     LOAD_DBC(sSpellPowerStore,                    "SpellPower.dbc");//15595
@@ -497,12 +499,10 @@ void DBCManager::LoadStores(const std::string& dataPath, uint32 defaultLocale)
     LOAD_DBC(sSpellRuneCostStore,                 "SpellRuneCost.dbc");//15595
     LOAD_DBC(sSpellShapeshiftStore,               "SpellShapeshift.dbc");//15595
     LOAD_DBC(sSpellShapeshiftFormStore,           "SpellShapeshiftForm.dbc");//15595
-    LOAD_DBC(sSpellVisualStore,                   "SpellVisual.dbc");//15595
-    LOAD_DBC(sSpellVisualKitStore,                "SpellVisualKit.dbc");//15595
+    LOAD_DBC(sSpellMiscStore,                     "SpellMisc.dbc");//17538
+
     LOAD_DBC(sSummonPropertiesStore,              "SummonProperties.dbc");//15595
     LOAD_DBC(sTalentStore,                        "Talent.dbc");//15595
-    LOAD_DBC(sTalentTabStore,                     "TalentTab.dbc");//15595
-    LOAD_DBC(sTalentTreePrimarySpellsStore,       "TalentTreePrimarySpells.dbc");
     LOAD_DBC(sTaxiNodesStore,                     "TaxiNodes.dbc");//15595
     LOAD_DBC(sTaxiPathStore,                      "TaxiPath.dbc");//15595
     LOAD_DBC(sTaxiPathNodeStore,                  "TaxiPathNode.dbc");//15595
@@ -577,6 +577,7 @@ void DBCManager::LoadStores(const std::string& dataPath, uint32 defaultLocale)
 
     // fill data
     sMapDifficultyMap[MAKE_PAIR32(0, 0)] = MapDifficulty(0, 0, false); // map 0 is missing from MapDifficulty.dbc use this till its ported to sql
+
     for (MapDifficultyEntry const* entry : sMapDifficultyStore)
         sMapDifficultyMap[MAKE_PAIR32(entry->MapID, entry->Difficulty)] = MapDifficulty(entry->RaidDuration, entry->MaxPlayers, !std::string(entry->Message).empty());
 
@@ -601,16 +602,13 @@ void DBCManager::LoadStores(const std::string& dataPath, uint32 defaultLocale)
 
     for (NamesReservedEntry const* namesReserved : sNamesReservedStore)
     {
-        ASSERT(namesReserved->Language < TOTAL_LOCALES || namesReserved->Language == -1);
         std::wstring wname;
         bool conversionResult = Utf8toWStr(namesReserved->Name, wname);
         ASSERT(conversionResult);
 
-        if (namesReserved->Language != -1)
-            NamesReservedValidators[namesReserved->Language].emplace_back(wname, Trinity::regex::icase | Trinity::regex::optimize);
-        else
-            for (uint32 i = 0; i < TOTAL_LOCALES; ++i)
-                NamesReservedValidators[i].emplace_back(wname, Trinity::regex::icase | Trinity::regex::optimize);
+
+        for (uint32 i = 0; i < TOTAL_LOCALES; ++i)
+            NamesReservedValidators[i].emplace_back(wname, Trinity::regex::icase | Trinity::regex::optimize);
     }
 
     for (PhaseGroupEntry const* group : sPhaseGroupStore)
@@ -639,17 +637,20 @@ void DBCManager::LoadStores(const std::string& dataPath, uint32 defaultLocale)
         if (spellInfo->LevelsID && (!levels || levels->SpellLevel))
             continue;
 
-        if (spellInfo && spellInfo->Attributes & SPELL_ATTR0_PASSIVE)
+        if (SpellMiscEntry const* spellMisc = sSpellMiscStore.LookupEntry(spellInfo->SpellMiscId))
         {
-            for (CreatureFamilyEntry const* cFamily : sCreatureFamilyStore)
+            if (spellInfo && spellMisc->Attributes & SPELL_ATTR0_PASSIVE)
             {
-                if (skillLine->SkillLine != cFamily->SkillLine[0] && skillLine->SkillLine != cFamily->SkillLine[1])
-                    continue;
+                for (CreatureFamilyEntry const* cFamily : sCreatureFamilyStore)
+                {
+                    if (skillLine->SkillLine != cFamily->SkillLine[0] && skillLine->SkillLine != cFamily->SkillLine[1])
+                        continue;
 
-                if (skillLine->AcquireMethod != SKILL_LINE_ABILITY_LEARNED_ON_SKILL_LEARN)
-                    continue;
+                    if (skillLine->AcquireMethod != SKILL_LINE_ABILITY_LEARNED_ON_SKILL_LEARN)
+                        continue;
 
-                sPetFamilySpellsStore[cFamily->ID].insert(spellInfo->ID);
+                    sPetFamilySpellsStore[cFamily->ID].insert(spellInfo->ID);
+                }
             }
         }
     }
@@ -679,32 +680,29 @@ void DBCManager::LoadStores(const std::string& dataPath, uint32 defaultLocale)
                 sSpellMgr->SetSpellDifficultyId(uint32(newEntry.DifficultySpellID[x]), spellDiff->ID);
     }
 
-    // create talent spells set
     for (TalentEntry const* talentInfo : sTalentStore)
     {
-        for (uint8 j = 0; j < MAX_TALENT_RANK; ++j)
-            if (talentInfo->SpellRank[j])
-                sTalentSpellPosMap[talentInfo->SpellRank[j]] = TalentSpellPos(talentInfo->ID, j);
+        ASSERT(talentInfo->ClassID < MAX_CLASSES);
+        ASSERT(talentInfo->TierID < MAX_TALENT_TIERS, "MAX_TALENT_TIERS must be at least %u", talentInfo->TierID + 1);
+        ASSERT(talentInfo->ColumnIndex < MAX_TALENT_COLUMNS, "MAX_TALENT_COLUMNS must be at least %u", talentInfo->ColumnIndex + 1);
+        _talentsByPosition[talentInfo->ClassID][talentInfo->TierID][talentInfo->ColumnIndex].push_back(talentInfo);
     }
 
-    // prepare fast data access to bit pos of talent ranks for use at inspecting
+    memset(_chrSpecializationsByIndex, 0, sizeof(_chrSpecializationsByIndex));
+    for (ChrSpecializationEntry const* chrSpec : sChrSpecializationStore)
     {
-        // now have all max ranks (and then bit amount used for store talent ranks in inspect)
-        for (TalentTabEntry const* talentTabInfo : sTalentTabStore)
+        ASSERT(chrSpec->ClassID < MAX_CLASSES);
+        ASSERT(chrSpec->OrderIndex < MAX_SPECIALIZATIONS);
+
+        uint32 storageIndex = chrSpec->ClassID;
+        if (chrSpec->Flags & CHR_SPECIALIZATION_FLAG_PET_OVERRIDE_SPEC)
         {
-            // prevent memory corruption; otherwise cls will become 12 below
-            if ((talentTabInfo->ClassMask & CLASSMASK_ALL_PLAYABLE) == 0)
-                continue;
-
-            // store class talent tab pages
-            for (uint32 cls = 1; cls < MAX_CLASSES; ++cls)
-                if (talentTabInfo->ClassMask & (1 << (cls - 1)))
-                    sTalentTabPages[cls][talentTabInfo->OrderIndex] = talentTabInfo->ID;
+            ASSERT(!chrSpec->ClassID);
+            storageIndex = PET_SPEC_OVERRIDE_CLASS_INDEX;
         }
-    }
 
-    for (TalentTreePrimarySpellsEntry const* talentSpell : sTalentTreePrimarySpellsStore)
-        sTalentTreePrimarySpellsMap[talentSpell->TalentTabID].push_back(talentSpell->SpellID);
+        _chrSpecializationsByIndex[storageIndex][chrSpec->OrderIndex] = chrSpec;
+    }
 
     for (TaxiPathEntry const* entry : sTaxiPathStore)
         sTaxiPathSetBySource[entry->FromTaxiNode][entry->ToTaxiNode] = TaxiPathBySourceAndDestination(entry->ID, entry->Cost);
@@ -840,21 +838,9 @@ char const* DBCManager::GetPetName(uint32 petfamily, uint32 /*dbclang*/)
     return pet_family->Name ? pet_family->Name : nullptr;
 }
 
-TalentSpellPos const* DBCManager::GetTalentSpellPos(uint32 spellId)
+std::vector<TalentEntry const*> const& DBCManager::GetTalentsByPosition(uint32 class_, uint32 tier, uint32 column) const
 {
-    TalentSpellPosMap::const_iterator itr = sTalentSpellPosMap.find(spellId);
-    if (itr == sTalentSpellPosMap.end())
-        return nullptr;
-
-    return &itr->second;
-}
-
-uint32 DBCManager::GetTalentSpellCost(uint32 spellId)
-{
-    if (TalentSpellPos const* pos = GetTalentSpellPos(spellId))
-        return pos->rank+1;
-
-    return 0;
+    return _talentsByPosition[class_][tier][column];
 }
 
 WMOAreaTableEntry const* DBCManager::GetWMOAreaTableEntryByTripple(int32 rootid, int32 adtid, int32 groupid)
@@ -901,6 +887,8 @@ uint32 DBCManager::GetMaxLevelForExpansion(uint32 expansion)
             return 80;
         case EXPANSION_CATACLYSM:
             return 85;
+        case EXPANSION_MISTS_OF_PANDARIA:
+            return 90;
         default:
             break;
     }
@@ -995,7 +983,7 @@ MapDifficulty const* DBCManager::GetDownscaledMapDifficultyData(uint32 mapId, Di
     MapDifficulty const* mapDiff = GetMapDifficultyData(mapId, Difficulty(tmpDiff));
     if (!mapDiff)
     {
-        if (tmpDiff > RAID_DIFFICULTY_25MAN_NORMAL) // heroic, downscale to normal
+        if (tmpDiff > DIFFICULTY_25_N) // heroic, downscale to normal
             tmpDiff -= 2;
         else
             tmpDiff -= 1;   // any non-normal mode for raids like tbc (only one mode)
@@ -1045,20 +1033,6 @@ PvPDifficultyEntry const* DBCManager::GetBattlegroundBracketById(uint32 mapid, B
                 return entry;
 
     return nullptr;
-}
-
-uint32 const* DBCManager::GetTalentTabPages(uint8 cls)
-{
-    return sTalentTabPages[cls];
-}
-
-std::vector<uint32> const* DBCManager::GetTalentTreePrimarySpells(uint32 talentTree)
-{
-    TalentTreePrimarySpellsMap::const_iterator itr = sTalentTreePrimarySpellsMap.find(talentTree);
-    if (itr == sTalentTreePrimarySpellsMap.end())
-        return nullptr;
-
-    return &itr->second;
 }
 
 uint32 DBCManager::GetLiquidFlags(uint32 liquidType)
@@ -1345,4 +1319,15 @@ bool DBCManager::IsInArea(uint32 objectAreaId, uint32 areaId)
     } while (objectAreaId);
 
     return false;
+}
+
+
+ChrSpecializationEntry const* DBCManager::GetChrSpecializationByIndex(uint32 class_, uint32 index) const
+{
+    return _chrSpecializationsByIndex[class_][index];
+}
+
+ChrSpecializationEntry const* DBCManager::GetDefaultChrSpecializationForClass(uint32 class_) const
+{
+    return GetChrSpecializationByIndex(class_, INITIAL_SPECIALIZATION_INDEX);
 }

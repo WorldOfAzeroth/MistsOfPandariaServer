@@ -298,7 +298,7 @@ void WorldSession::SendBindPoint(Creature* npc)
 
 void WorldSession::HandleListStabledPetsOpcode(WorldPacket& recvData)
 {
-    TC_LOG_DEBUG("network", "WORLD: Recv MSG_LIST_STABLED_PETS");
+    TC_LOG_DEBUG("network", "WORLD: Recv SMSG_PET_STABLE_LIST");
     ObjectGuid npcGUID;
 
     recvData >> npcGUID;
@@ -319,7 +319,7 @@ void WorldSession::HandleListStabledPetsOpcode(WorldPacket& recvData)
 
 void WorldSession::SendStablePet(ObjectGuid guid)
 {
-    WorldPacket data(MSG_LIST_STABLED_PETS, 200);
+    WorldPacket data(SMSG_PET_STABLE_LIST, 200);
 
     data << uint64(guid); // Stablemaster
     data << uint8(_player->PlayerPetDataStore.size());

@@ -27,7 +27,7 @@ enum LevelLimit
     // Client expected level limitation, like as used in DBC item max levels for "until max player level"
     // use as default max player level, must be fit max level for used client
     // also see MAX_LEVEL and STRONG_MAX_LEVEL define
-    DEFAULT_MAX_LEVEL = 85,
+    DEFAULT_MAX_LEVEL = 90,
 
     // client supported max level for player/pets/etc. Avoid overflow or client stability affected.
     // also see GT_MAX_LEVEL define
@@ -41,11 +41,11 @@ enum LevelLimit
 enum BattlegroundBracketId                                  // bracketId for level ranges
 {
     BG_BRACKET_ID_FIRST          = 0,
-    BG_BRACKET_ID_LAST           = 15
+    BG_BRACKET_ID_LAST           = 16
 };
 
 // must be max value in PvPDificulty slot+1
-#define MAX_BATTLEGROUND_BRACKETS  16
+#define MAX_BATTLEGROUND_BRACKETS  17
 
 #pragma pack(push, 1)
 struct DBCPosition2D
@@ -95,7 +95,8 @@ enum AchievementFlags
     ACHIEVEMENT_FLAG_SHOW_IN_GUILD_HEADER  = 0x00002000,    // Shows in guild news header
     ACHIEVEMENT_FLAG_GUILD                 = 0x00004000,    //
     ACHIEVEMENT_FLAG_SHOW_GUILD_MEMBERS    = 0x00008000,    //
-    ACHIEVEMENT_FLAG_SHOW_CRITERIA_MEMBERS = 0x00010000     //
+    ACHIEVEMENT_FLAG_SHOW_CRITERIA_MEMBERS = 0x00010000,    //
+    ACHIEVEMENT_FLAG_BNET_ACCOUNT_BOUND    = 0x00020000,    //
 };
 
 enum AchievementCriteriaLimits
@@ -391,18 +392,53 @@ enum AreaMountFlags
     AREA_MOUNT_FLAG_UNDERWATER_ALLOWED  = 0x8
 };
 
+enum ChrSpecializationFlag
+{
+    CHR_SPECIALIZATION_FLAG_CASTER                  = 0x01,
+    CHR_SPECIALIZATION_FLAG_RANGED                  = 0x02,
+    CHR_SPECIALIZATION_FLAG_MELEE                   = 0x04,
+    CHR_SPECIALIZATION_FLAG_UNKNOWN                 = 0x08,
+    CHR_SPECIALIZATION_FLAG_DUAL_WIELD_TWO_HANDED   = 0x10,     // used for CUnitDisplay::SetSheatheInvertedForDualWield
+    CHR_SPECIALIZATION_FLAG_PET_OVERRIDE_SPEC       = 0x20,
+    CHR_SPECIALIZATION_FLAG_RECOMMENDED             = 0x40,
+};
+
+
 enum Difficulty : uint8
 {
-    REGULAR_DIFFICULTY           = 0,
+    DIFFICULTY_NONE           = 0,
+    DIFFICULTY_NORMAL         = 1,
+    DIFFICULTY_HEROIC         = 2,
+    DIFFICULTY_10_N           = 3,
+    DIFFICULTY_25_N           = 4,
+    DIFFICULTY_10_HC          = 5,
+    DIFFICULTY_25_HC          = 6,
+    DIFFICULTY_LFR            = 7,
+    DIFFICULTY_CHALLENGE      = 8,
+    DIFFICULTY_40             = 9,
+    DIFFICULTY_HC_SCENARIO    = 11,
+    DIFFICULTY_N_SCENARIO     = 12,
+    DIFFICULTY_NORMAL_RAID    = 14,
+    DIFFICULTY_HEROIC_RAID    = 15,
+    DIFFICULTY_MYTHIC_RAID    = 16,
+    DIFFICULTY_LFR_NEW        = 17,
+    DIFFICULTY_EVENT_RAID     = 18,
+    DIFFICULTY_EVENT_DUNGEON  = 19,
+    DIFFICULTY_EVENT_SCENARIO = 20,
 
-    DUNGEON_DIFFICULTY_NORMAL    = 0,
-    DUNGEON_DIFFICULTY_HEROIC    = 1,
-    DUNGEON_DIFFICULTY_EPIC      = 2,
+    MAX_DIFFICULTY
+};
 
-    RAID_DIFFICULTY_10MAN_NORMAL = 0,
-    RAID_DIFFICULTY_25MAN_NORMAL = 1,
-    RAID_DIFFICULTY_10MAN_HEROIC = 2,
-    RAID_DIFFICULTY_25MAN_HEROIC = 3
+enum DifficultyFlags
+{
+    DIFFICULTY_FLAG_HEROIC          = 0x01,
+    DIFFICULTY_FLAG_DEFAULT         = 0x02,
+    DIFFICULTY_FLAG_CAN_SELECT      = 0x04, // Player can select this difficulty in dropdown menu
+    DIFFICULTY_FLAG_CHALLENGE_MODE  = 0x08,
+
+    DIFFICULTY_FLAG_LEGACY          = 0x20,
+    DIFFICULTY_FLAG_DISPLAY_HEROIC  = 0x40, // Controls icon displayed on minimap when inside the instance
+    DIFFICULTY_FLAG_DISPLAY_MYTHIC  = 0x80  // Controls icon displayed on minimap when inside the instance
 };
 
 #define RAID_DIFFICULTY_MASK_25MAN 1    // since 25man difficulties are 1 and 3, we can check them like that
@@ -413,18 +449,18 @@ enum Difficulty : uint8
 
 enum SpawnMask
 {
-    SPAWNMASK_CONTINENT         = (1 << REGULAR_DIFFICULTY), // any maps without spawn modes
+    SPAWNMASK_CONTINENT         = (1 << DIFFICULTY_NONE), // any maps without spawn modes
 
-    SPAWNMASK_DUNGEON_NORMAL    = (1 << DUNGEON_DIFFICULTY_NORMAL),
-    SPAWNMASK_DUNGEON_HEROIC    = (1 << DUNGEON_DIFFICULTY_HEROIC),
+    SPAWNMASK_DUNGEON_NORMAL    = (1 << DIFFICULTY_NORMAL),
+    SPAWNMASK_DUNGEON_HEROIC    = (1 << DIFFICULTY_HEROIC),
     SPAWNMASK_DUNGEON_ALL       = (SPAWNMASK_DUNGEON_NORMAL | SPAWNMASK_DUNGEON_HEROIC),
 
-    SPAWNMASK_RAID_10MAN_NORMAL = (1 << RAID_DIFFICULTY_10MAN_NORMAL),
-    SPAWNMASK_RAID_25MAN_NORMAL = (1 << RAID_DIFFICULTY_25MAN_NORMAL),
+    SPAWNMASK_RAID_10MAN_NORMAL = (1 << DIFFICULTY_10_N),
+    SPAWNMASK_RAID_25MAN_NORMAL = (1 << DIFFICULTY_25_N),
     SPAWNMASK_RAID_NORMAL_ALL   = (SPAWNMASK_RAID_10MAN_NORMAL | SPAWNMASK_RAID_25MAN_NORMAL),
 
-    SPAWNMASK_RAID_10MAN_HEROIC = (1 << RAID_DIFFICULTY_10MAN_HEROIC),
-    SPAWNMASK_RAID_25MAN_HEROIC = (1 << RAID_DIFFICULTY_25MAN_HEROIC),
+    SPAWNMASK_RAID_10MAN_HEROIC = (1 << DIFFICULTY_10_HC),
+    SPAWNMASK_RAID_25MAN_HEROIC = (1 << DIFFICULTY_25_HC),
     SPAWNMASK_RAID_HEROIC_ALL   = (SPAWNMASK_RAID_10MAN_HEROIC | SPAWNMASK_RAID_25MAN_HEROIC),
 
     SPAWNMASK_RAID_ALL          = (SPAWNMASK_RAID_NORMAL_ALL | SPAWNMASK_RAID_HEROIC_ALL)
@@ -736,6 +772,9 @@ enum SummonPropType
     SUMMON_PROP_TYPE_JEEVES          = 12,                  // summon Jeeves, 1 spell in 3.3.5a
     SUMMON_PROP_TYPE_LASHTAIL        = 13                   // Lashtail Hatchling, 1 spell in 4.2.2
 };
+
+#define MAX_TALENT_TIERS 6
+#define MAX_TALENT_COLUMNS 3
 
 // SummonProperties.dbc, col 5
 enum SummonPropFlags

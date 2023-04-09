@@ -159,7 +159,7 @@ namespace WorldPackets
         class SpellPeriodicAuraLog final : public ServerPacket
         {
         public:
-            SpellPeriodicAuraLog() : ServerPacket(SMSG_PERIODIC_AURA_LOG, 8 + 8 + 4 + 4) { }
+            SpellPeriodicAuraLog() : ServerPacket(SMSG_SPELL_PERIODIC_AURA_LOG, 8 + 8 + 4 + 4) { }
 
             int32 SpellID = 0;
             ObjectGuid TargetGUID;

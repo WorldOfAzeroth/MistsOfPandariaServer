@@ -134,7 +134,7 @@ public:
                 float timeSinceStopProgressPct = float(now - _stateChangeTime) / float(timeToStop);
 
                 float progressPct;
-                if (!_owner.HasFlag(GAMEOBJECT_DYNAMIC, GO_DYNFLAG_LO_INVERTED_MOVEMENT))
+                if (!_owner.HasFlag(OBJECT_DYNAMIC_FLAGS, GO_DYNFLAG_LO_INVERTED_MOVEMENT))
                 {
                     if (_owner.GetGoState() == GO_STATE_TRANSPORT_ACTIVE)
                         stopTargetPathPct = 1.0f;
@@ -192,7 +192,7 @@ public:
                         newState = GO_STATE_TRANSPORT_STOPPED;
                     else if (currentState - GO_STATE_TRANSPORT_ACTIVE == int32(_stopFrames.size()))
                         newState = GOState(currentState - 1);
-                    else if (_owner.HasFlag(GAMEOBJECT_DYNAMIC, GO_DYNFLAG_LO_INVERTED_MOVEMENT))
+                    else if (_owner.HasFlag(OBJECT_DYNAMIC_FLAGS, GO_DYNFLAG_LO_INVERTED_MOVEMENT))
                         newState = GOState(currentState - 1);
                     else
                         newState = GOState(currentState + 1);
@@ -287,9 +287,9 @@ public:
         {
             // initialization
             if (int32(_pathProgress) > stopPathProgress)
-                _owner.SetFlag(GAMEOBJECT_DYNAMIC, GO_DYNFLAG_LO_INVERTED_MOVEMENT);
+                _owner.SetFlag(OBJECT_DYNAMIC_FLAGS, GO_DYNFLAG_LO_INVERTED_MOVEMENT);
             else
-                _owner.RemoveFlag(GAMEOBJECT_DYNAMIC, GO_DYNFLAG_LO_INVERTED_MOVEMENT);
+                _owner.RemoveFlag(OBJECT_DYNAMIC_FLAGS, GO_DYNFLAG_LO_INVERTED_MOVEMENT);
 
             return;
         }
@@ -309,9 +309,9 @@ public:
         bool isAtStartOfPath = _stateChangeProgress == 0;
 
         if (oldToNewStateDelta < newToOldStateDelta && !isAtStartOfPath)
-            _owner.SetFlag(GAMEOBJECT_DYNAMIC, GO_DYNFLAG_LO_INVERTED_MOVEMENT);
+            _owner.SetFlag(OBJECT_DYNAMIC_FLAGS, GO_DYNFLAG_LO_INVERTED_MOVEMENT);
         else
-            _owner.RemoveFlag(GAMEOBJECT_DYNAMIC, GO_DYNFLAG_LO_INVERTED_MOVEMENT);
+            _owner.RemoveFlag(OBJECT_DYNAMIC_FLAGS, GO_DYNFLAG_LO_INVERTED_MOVEMENT);
     }
 
     void OnRelocated() override
@@ -2861,9 +2861,9 @@ void GameObject::BuildValuesUpdate(uint8 updateType, ByteBuffer* data, Player* t
         {
             updateMask.SetBit(index);
 
-            if (index == GAMEOBJECT_DYNAMIC)
+            if (index == OBJECT_DYNAMIC_FLAGS)
             {
-                uint32 dynamicFlags = m_uint32Values[GAMEOBJECT_DYNAMIC];
+                uint32 dynamicFlags = m_uint32Values[OBJECT_DYNAMIC_FLAGS];
 
                 uint16 dynFlags = 0;
                 uint16 pathProgress = 0xFFFF;
@@ -2925,15 +2925,15 @@ std::vector<uint32> const* GameObject::GetPauseTimes() const
 
 void GameObject::SetPathProgressForClient(float progress)
 {
-    bool marked = _changesMask.GetBit(GAMEOBJECT_DYNAMIC);
+    bool marked = _changesMask.GetBit(OBJECT_DYNAMIC_FLAGS);
 
-    uint32 dynamicFlags = GetUInt32Value(GAMEOBJECT_DYNAMIC);
+    uint32 dynamicFlags = GetUInt32Value(OBJECT_DYNAMIC_FLAGS);
     dynamicFlags &= 0xFFFF; // remove high bits
     dynamicFlags |= uint32(progress * 65535.0f) << 16;
-    UpdateUInt32Value(GAMEOBJECT_DYNAMIC, dynamicFlags);
+    UpdateUInt32Value(OBJECT_DYNAMIC_FLAGS, dynamicFlags);
 
     if (!marked)
-        _changesMask.UnsetBit(GAMEOBJECT_DYNAMIC);
+        _changesMask.UnsetBit(OBJECT_DYNAMIC_FLAGS);
 }
 
 void GameObject::GetRespawnPosition(float &x, float &y, float &z, float* ori /* = nullptr*/) const

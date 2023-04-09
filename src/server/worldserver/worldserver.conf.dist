@@ -649,7 +649,7 @@ StrictPetNames = 0
 #                     7   - (Spanish Mexico)
 #                     8   - (Russian)
 
-DBC.Locale = 0
+DBC.Locale = 4
 
 #
 #    DeclinedNames
@@ -663,12 +663,13 @@ DeclinedNames = 0
 #    Expansion
 #        Description: Allow server to use content from expansions. Checks for expansion-related
 #                     map files, client compatibility and class/race character creation.
-#        Default:     3 - (Expansion 3)
+#        Default:     4 - (Expansion 4)
+#                     3 - (Expansion 3)
 #                     2 - (Expansion 2)
 #                     1 - (Expansion 1)
 #                     0 - (Disabled, Ignore and disable expansion content (maps, races, classes)
 
-Expansion = 3
+Expansion = 4
 
 #
 #    MinPlayerName
@@ -744,6 +745,9 @@ CharacterCreating.Disabled = 0
 #                     512  - (Disabled, Blood Elf)
 #                     1024 - (Disabled, Draenei)
 #                     2097152 - (Disabled, Worgen)
+#                     8388608 - (Disabled, Pandaren Neutral)
+#                     16777216 - (Disabled, Pandaren Alliance)
+#                     33554432 - (Disabled, Pandaren Horde)
 
 CharacterCreating.Disabled.RaceMask = 0
 
@@ -761,6 +765,7 @@ CharacterCreating.Disabled.RaceMask = 0
 #                     64   - (Disabled, Shaman)
 #                     128  - (Disabled, Mage)
 #                     256  - (Disabled, Warlock)
+#                     512  - (Disabled, Monk)
 #                     1024 - (Disabled, Druid)
 
 CharacterCreating.Disabled.ClassMask = 0
@@ -814,9 +819,9 @@ SkipCinematics = 0
 #        Description: Maximum level that can be reached by players.
 #        Important:   Levels beyond 100 are not recommended at all.
 #        Range:       1-255
-#        Default:     85
+#        Default:     90
 
-MaxPlayerLevel = 85
+MaxPlayerLevel = 90
 
 #
 #    MinDualSpecLevel
@@ -2860,9 +2865,9 @@ Arena.QueueAnnouncer.Enable = 0
 #
 #    Arena.ArenaSeason.ID
 #        Description: Current arena season id shown in clients.
-#        Default:     11
+#        Default:     15
 
-Arena.ArenaSeason.ID = 11
+Arena.ArenaSeason.ID = 15
 
 #
 #    Arena.ArenaSeason.InProgress

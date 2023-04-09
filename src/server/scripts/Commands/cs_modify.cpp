@@ -224,7 +224,7 @@ public:
             uint32 factionid = target->GetFaction();
             uint32 flag      = target->GetUInt32Value(UNIT_FIELD_FLAGS);
             uint32 npcflag   = target->GetUInt32Value(UNIT_NPC_FLAGS);
-            uint32 dyflag    = target->GetUInt32Value(UNIT_DYNAMIC_FLAGS);
+            uint32 dyflag    = target->GetUInt32Value(OBJECT_DYNAMIC_FLAGS);
             handler->PSendSysMessage(LANG_CURRENT_FACTION, target->GetGUID().GetCounter(), factionid, flag, npcflag, dyflag);
             return true;
         }
@@ -250,7 +250,7 @@ public:
 
         uint32  dyflag;
         if (!pdyflag)
-            dyflag = target->GetUInt32Value(UNIT_DYNAMIC_FLAGS);
+            dyflag = target->GetUInt32Value(OBJECT_DYNAMIC_FLAGS);
         else
             dyflag = atoi(pdyflag);
 
@@ -266,7 +266,7 @@ public:
         target->SetFaction(factionid);
         target->SetUInt32Value(UNIT_FIELD_FLAGS, flag);
         target->SetUInt32Value(UNIT_NPC_FLAGS, npcflag);
-        target->SetUInt32Value(UNIT_DYNAMIC_FLAGS, dyflag);
+        target->SetUInt32Value(OBJECT_DYNAMIC_FLAGS, dyflag);
 
         return true;
     }

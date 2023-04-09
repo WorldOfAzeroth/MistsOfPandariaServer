@@ -451,15 +451,7 @@ Creature* PlayerAI::GetCharmer() const
 
 uint8 PlayerAI::GetPlayerSpec(Player const* who)
 {
-    if (!who)
-        return 0;
-
-    uint32 tabId = who->GetPrimaryTalentTree(who->GetActiveSpec());
-    TalentTabEntry const* tabEntry = sTalentTabStore.LookupEntry(tabId);
-    if (!tabEntry)
-        return 0;
-
-    return tabEntry->OrderIndex;
+    return 0;//TODO
 }
 
 bool PlayerAI::IsPlayerHealer(Player const* who)

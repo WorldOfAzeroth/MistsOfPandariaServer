@@ -61,7 +61,7 @@ namespace WorldPackets
         class InstanceInfo final : public ServerPacket
         {
         public:
-            InstanceInfo() : ServerPacket(SMSG_INSTANCE_INFO, 4) { }
+            InstanceInfo() : ServerPacket(SMSG_RAID_INSTANCE_INFO, 4) { }
 
             WorldPacket const* Write() override;
 

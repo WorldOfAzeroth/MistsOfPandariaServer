@@ -405,7 +405,7 @@ WorldSocket::ReadDataHandlerResult WorldSocket::ReadDataHandler()
                 if (_worldSession)
                     _worldSession->HandleEnableNagleAlgorithm();
                 return ReadDataHandlerResult::Ok;
-            case CMSG_KEEP_ALIVE: // todo: handle this packet in the same way of CMSG_TIME_SYNC_RESP
+            case CMSG_KEEP_ALIVE: // todo: handle this packet in the same way of CMSG_TIME_SYNC_RESPONSE
                 LogOpcodeText(opcode, sessionGuard);
                 return ReadDataHandlerResult::Ok;
             case CMSG_CONNECT_TO_FAILED:
@@ -422,7 +422,7 @@ WorldSocket::ReadDataHandlerResult WorldSocket::ReadDataHandler()
                 HandleConnectToFailed(connectToFailed);
                 return ReadDataHandlerResult::Ok;
             }
-            case CMSG_TIME_SYNC_RESP:
+            case CMSG_TIME_SYNC_RESPONSE:
                 packetToQueue = new WorldPacket(std::move(packet), std::chrono::steady_clock::now());
                 break;
             default:

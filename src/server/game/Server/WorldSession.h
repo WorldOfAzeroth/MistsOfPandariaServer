@@ -740,6 +740,7 @@ class TC_GAME_API WorldSession
         void HandleGMTicketCreateOpcode(WorldPacket& recvPacket);
         void HandleGMTicketUpdateOpcode(WorldPacket& recvPacket);
         void HandleGMTicketDeleteOpcode(WorldPacket& recvPacket);
+        void HandleGMTicketCaseStatusOpcode(WorldPacket& recvPacket);
         void HandleGMTicketGetTicketOpcode(WorldPacket& recvPacket);
         void HandleGMTicketSystemStatusOpcode(WorldPacket& recvPacket);
         void HandleGMSurveySubmit(WorldPacket& recvPacket);
@@ -911,8 +912,8 @@ class TC_GAME_API WorldSession
         void HandleSetPetSlot(WorldPacket& recvPacket);
         void HandleStableRevivePet(WorldPacket& recvPacket);
 
-        void HandleDuelAcceptedOpcode(WorldPacket& recvPacket);
-        void HandleDuelCancelledOpcode(WorldPacket& recvPacket);
+        void HandleDuelProposedOpcode(WorldPacket& recvPacket);
+        void HandleDuelResponseOpcode(WorldPacket& recvPacket);
 
         void HandleAcceptTradeOpcode(WorldPackets::Trade::AcceptTrade& packet);
         void HandleBeginTradeOpcode(WorldPackets::Trade::BeginTrade& packet);
@@ -1148,18 +1149,6 @@ class TC_GAME_API WorldSession
         void SendLfgTeleportError(lfg::LfgTeleportResult err);
 
         // Arena Team
-        void HandleInspectArenaTeamsOpcode(WorldPacket& recvData);
-        void HandleArenaTeamQueryOpcode(WorldPacket& recvData);
-        void HandleArenaTeamRosterOpcode(WorldPacket& recvData);
-        void HandleArenaTeamCreateOpcode(WorldPacket& recvData);
-        void HandleArenaTeamInviteOpcode(WorldPacket& recvData);
-        void HandleArenaTeamAcceptOpcode(WorldPacket& recvData);
-        void HandleArenaTeamDeclineOpcode(WorldPacket& recvData);
-        void HandleArenaTeamLeaveOpcode(WorldPacket& recvData);
-        void HandleArenaTeamRemoveOpcode(WorldPacket& recvData);
-        void HandleArenaTeamDisbandOpcode(WorldPacket& recvData);
-        void HandleArenaTeamLeaderOpcode(WorldPacket& recvData);
-
         void HandleAreaSpiritHealerQueryOpcode(WorldPacket& recvData);
         void HandleAreaSpiritHealerQueueOpcode(WorldPacket& recvData);
         void HandleCancelMountAuraOpcode(WorldPacket& recvData);

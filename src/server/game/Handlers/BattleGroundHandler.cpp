@@ -807,7 +807,7 @@ void WorldSession::HandleReportPvPAFK(WorldPacket& recvData)
 
 void WorldSession::HandleRequestRatedBgInfo(WorldPacket & recvData)
 {
-    TC_LOG_DEBUG("network", "WORLD: CMSG_REQUEST_RATED_BG_INFO");
+    TC_LOG_DEBUG("network", "WORLD: CMSG_BATTLEFIELD_RATED_INFO_REQUEST");
 
     uint8 mode;
     recvData >> mode;

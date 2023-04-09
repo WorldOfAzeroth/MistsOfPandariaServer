@@ -31,7 +31,13 @@ DB2Storage<ItemEntry>               sItemStore("Item.db2", Itemfmt, HOTFIX_SEL_I
 DB2Storage<ItemCurrencyCostEntry>   sItemCurrencyCostStore("ItemCurrencyCost.db2", ItemCurrencyCostfmt, HOTFIX_SEL_ITEM_CURRENCY_COST);
 DB2Storage<ItemExtendedCostEntry>   sItemExtendedCostStore("ItemExtendedCost.db2", ItemExtendedCostEntryfmt, HOTFIX_SEL_ITEM_EXTENDED_COST);
 DB2Storage<ItemSparseEntry>         sItemSparseStore("Item-sparse.db2", ItemSparsefmt, HOTFIX_SEL_ITEM_SPARSE);
+DB2Storage<ItemUpgradeEntry>        sItemUpgradeStore("ItemUpgrade.db2", ItemUpgradefmt, HOTFIX_SEL_ITEM_SPARSE);
+
 DB2Storage<KeyChainEntry>           sKeyChainStore("KeyChain.db2", KeyChainfmt, HOTFIX_SEL_KEY_CHAIN);
+DB2Storage<SpellReagentsEntry>      sSpellReagentsStore("KeyChain.db2", SpellReagentsfmt, HOTFIX_SEL_SPELL_REAGENTS);
+DB2Storage<SpellVisualEntry>        sSpellVisualStore("SpellVisual.db2", SpellVisualfmt, HOTFIX_SEL_SPELL_VISUAL);
+DB2Storage<SpellVisualKitEntry>     sSpellVisualKitStore("SpellVisualKit.db2", SpellVisualKitfmt, HOTFIX_SEL_SPELL_VISUAL_KIT);
+
 
 typedef std::list<std::string> DB2StoreProblemList;
 
@@ -106,6 +112,9 @@ uint32 DB2Manager::LoadStores(std::string const& dataPath, uint32 defaultLocale)
     LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sItemSparseStore,          db2Path, defaultLocale);
     LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sItemExtendedCostStore,    db2Path, defaultLocale);
     LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sKeyChainStore,            db2Path, defaultLocale);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sItemUpgradeStore,         db2Path, defaultLocale);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sKeyChainStore,            db2Path, defaultLocale);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sSpellReagentsStore,       db2Path, defaultLocale);
 
     // error checks
     if (bad_db2_files.size() >= DB2FilesCount)

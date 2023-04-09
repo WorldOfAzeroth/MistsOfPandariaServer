@@ -816,7 +816,7 @@ void WorldSession::HandleMoveTimeSkippedOpcode(WorldPacket& recvData)
 
 void WorldSession::HandleTimeSyncResp(WorldPacket& recvData)
 {
-    TC_LOG_DEBUG("network", "CMSG_TIME_SYNC_RESP");
+    TC_LOG_DEBUG("network", "CMSG_TIME_SYNC_RESPONSE");
 
     uint32 counter, clientTimestamp;
     recvData >> counter >> clientTimestamp;

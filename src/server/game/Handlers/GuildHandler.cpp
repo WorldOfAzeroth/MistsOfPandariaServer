@@ -379,7 +379,7 @@ void WorldSession::HandleGuildEventLogQueryOpcode(WorldPacket& /* recvPacket */)
 
 void WorldSession::HandleGuildBankMoneyWithdrawn(WorldPackets::Guild::GuildBankRemainingWithdrawMoneyQuery& /*recvPacket */)
 {
-    TC_LOG_DEBUG("guild", "CMSG_GUILD_BANK_REMAINING_WITHDRAW_MONEY_QUERY [%s]", GetPlayerInfo().c_str());
+    TC_LOG_DEBUG("guild", "CMSG_GUILD_BANK_MONEY_WITHDRAWN_QUERY [%s]", GetPlayerInfo().c_str());
 
     if (Guild* guild = GetPlayer()->GetGuild())
         guild->SendMoneyInfo(this);

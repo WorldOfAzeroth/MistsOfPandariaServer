@@ -19,12 +19,33 @@
 #define TRINITY_DB2STRUCTURE_H
 
 #include "Common.h"
+#include "DBCEnums.h"
 
 #pragma pack(push, 1)
 
+#define MAX_BROADCAST_TEXT_EMOTES 3
+#define MAX_HOLIDAY_DURATIONS 10
+#define MAX_HOLIDAY_DATES 16
+#define MAX_HOLIDAY_FLAGS 10
+#define MAX_ITEM_PROTO_FLAGS 3
 #define MAX_ITEM_PROTO_SOCKETS 3
 #define MAX_ITEM_PROTO_SPELLS  5
 #define MAX_ITEM_PROTO_STATS  10
+
+struct BroadcastTextEntry
+{
+    uint32 ID;
+    int32 Language;
+    LocalizedString* MaleText;
+    LocalizedString* FemaleText;
+    uint32 EmoteID[MAX_BROADCAST_TEXT_EMOTES];
+    uint32 EmoteDelay[MAX_BROADCAST_TEXT_EMOTES];
+    uint32 SoundID;
+    uint32 UnkEmoteID;
+    uint32 Type;
+};
+
+
 
 struct ItemEntry
 {
@@ -50,9 +71,10 @@ struct ItemSparseEntry
     uint32     Quality;                                             // 1
     uint32     Flags;                                               // 2
     uint32     Flags2;                                              // 3
-    float      PriceRandomValue;                                    // 4
-    float      PriceVariance;                                       // 5
-    uint32     BuyCount;                                            // 6
+    uint32     Flags3;                                              // 4
+    float      PriceRandomValue;                                    // 5
+    float      PriceVariance;                                       // 6
+    uint32     BuyCount;                                            // 7
     uint32     BuyPrice;                                            // 7
     uint32     SellPrice;                                           // 8
     uint32     InventoryType;                                       // 9
@@ -117,6 +139,16 @@ struct ItemSparseEntry
     int32      CurrencySubstitutionCount;                           // 130
 };
 
+struct ItemUpgradeEntry
+{
+    uint32     UpgradeID;                                    // 0
+    uint32     UpgradeGroupId;                               // 1 groupid from ItemUpgradePath.dbc
+    uint32     IlvlStep;                                     // 2
+    uint32     ItemLvl;                                      // 3 required ilvl
+    uint32     CurrencyType;                                 // 4 CurrencyType cost
+    uint32     CurrencyCost;                                 // 5 CurrencyCost amount
+};
+
 #define MAX_ITEM_EXT_COST_ITEMS         5
 #define MAX_ITEM_EXT_COST_CURRENCIES    5
 
@@ -146,6 +178,86 @@ struct KeyChainEntry
     uint32      ID;
     uint8       Key[KEYCHAIN_SIZE];
 };
+
+struct QuestPackageItemEntry
+{
+    uint32 ID;                                                      // 0
+    uint32 QuestPackageID;                                          // 1
+    uint32 ItemID;                                                  // 2
+    uint32 ItemCount;                                               // 3
+    uint32 FilterType;                                              // 4
+};
+
+
+// SpellReagents.db2
+struct SpellReagentsEntry
+{
+    //uint32  Id;                                            // 0         m_ID
+    int32     Reagent[MAX_SPELL_REAGENTS];                   // 1  - 10   m_reagent
+    uint32    ReagentCount[MAX_SPELL_REAGENTS];              // 11 - 20   m_reagentCount
+};
+
+// SpellVisual.db2
+struct SpellVisualEntry
+{
+    //uint32  ID;
+    //uint32  PrecastKit;
+    //uint32  CastKit;
+    //uint32  ImpactKit;
+    //uint32  StateKit;
+    //uint32  StateDoneKit;
+    //uint32  ChannelKit;
+    uint32  HasMissile;
+    int32   MissileModel;
+    //uint32  MissilePathType;
+    //uint32  MissileDestinationAttachment;
+    //uint32  MissileSound;
+    //uint32  AnimEventSoundID;
+    //uint32  Flags;
+    //uint32  CasterImpactKit;
+    //uint32  TargetImpactKit;
+    //int32   MissileAttachment;
+    //uint32  MissileFollowGroundHeight;
+    //uint32  MissileFollowGroundDropSpeed;
+    //uint32  MissileFollowGroundApprach;
+    //uint32  MissileFollowGroundFlags;
+    //uint32  MissileMotionId;
+    //uint32  MissileTargetingKit;
+    //uint32  InstantAreaKit;
+    //uint32  ImpactAreaKit;
+    //uint32  PersistentAreaKit;
+    //DBCPosition3D MissileCastOffset;
+    //DBCPosition3D MissileImpactOffset;
+    uint32 AlternativeVisualID;
+};
+
+// SpellVisualKit.db2
+struct SpellVisualKitEntry
+{
+    uint32 ID;
+    uint32 StartAnimID;
+    uint32 AnimID;
+    uint32 AnimKitID;
+    uint32 HeadEffect;
+    uint32 ChestEffect;
+    uint32 BaseEffect;
+    uint32 LeftHandEffect;
+    uint32 RightHandEffect;
+    uint32 BreathEffect;
+    uint32 LeftWeaponEffect;
+    uint32 RightWeaponEffect;
+    uint32 SpecialEffect[3];
+    uint32 WorldEffect;
+    uint32 SoundID;
+    uint32 ShakeID;
+    uint32 CharProc[4];
+    uint32 CharParamZero[4];
+    uint32 CharParamOne[4];
+    uint32 CharParamTwo[4];
+    uint32 CharParamThree[4];
+    uint32 Flags;
+};
+
 
 #pragma pack(pop)
 

@@ -28,7 +28,36 @@ enum SpellEffIndex : uint8
 {
     EFFECT_0 = 0,
     EFFECT_1 = 1,
-    EFFECT_2 = 2
+    EFFECT_2 = 2,
+    EFFECT_3 = 3,
+    EFFECT_4 = 4,
+    EFFECT_5 = 5,
+    EFFECT_6 = 6,
+    EFFECT_7 = 7,
+    EFFECT_8 = 8,
+    EFFECT_9 = 9,
+    EFFECT_10 = 10,
+    EFFECT_11 = 11,
+    EFFECT_12 = 12,
+    EFFECT_13 = 13,
+    EFFECT_14 = 14,
+    EFFECT_15 = 15,
+    EFFECT_16 = 16,
+    EFFECT_17 = 17,
+    EFFECT_18 = 18,
+    EFFECT_19 = 19,
+    EFFECT_20 = 20,
+    EFFECT_21 = 21,
+    EFFECT_22 = 22,
+    EFFECT_23 = 23,
+    EFFECT_24 = 24,
+    EFFECT_25 = 25,
+    EFFECT_26 = 26,
+    EFFECT_27 = 27,
+    EFFECT_28 = 28,
+    EFFECT_29 = 29,
+    EFFECT_30 = 30,
+    EFFECT_31 = 31
 };
 
 // used in script definitions
@@ -52,7 +81,8 @@ enum Expansions
     EXPANSION_THE_BURNING_CRUSADE      = 1,
     EXPANSION_WRATH_OF_THE_LICH_KING   = 2,
     EXPANSION_CATACLYSM                = 3,
-    MAX_EXPANSIONS                     = 4
+    EXPANSION_MISTS_OF_PANDARIA        = 4,
+    MAX_EXPANSIONS                     = 5
 };
 
 enum Gender
@@ -89,20 +119,41 @@ enum Races
     //RACE_ICE_TROLL          = 21,
     RACE_WORGEN             = 22,
     //RACE_GILNEAN            = 23
+    RACE_PANDAREN_NEUTRAL   = 24,
+    RACE_PANDAREN_ALLIANCE  = 25,
+    RACE_PANDAREN_HORDE     = 26
 };
 
 // max+1 for player race
-#define MAX_RACES         23
+#define MAX_RACES         27
 
-#define RACEMASK_ALL_PLAYABLE \
-    ((1<<(RACE_HUMAN-1))   |(1<<(RACE_ORC-1))          |(1<<(RACE_DWARF-1))   | \
-     (1<<(RACE_NIGHTELF-1))|(1<<(RACE_UNDEAD_PLAYER-1))|(1<<(RACE_TAUREN-1))  | \
-     (1<<(RACE_GNOME-1))   |(1<<(RACE_TROLL-1))        |(1<<(RACE_BLOODELF-1))| \
-     (1<<(RACE_DRAENEI-1)) |(1<<(RACE_GOBLIN-1))       |(1<<(RACE_WORGEN-1)))
+#define RACEMASK_ALL_PLAYABLE      \
+    ((1<<(RACE_HUMAN-1))         | \
+     (1<<(RACE_ORC-1))           | \
+     (1<<(RACE_DWARF-1))         | \
+     (1<<(RACE_NIGHTELF-1))      | \
+     (1<<(RACE_UNDEAD_PLAYER-1)) | \
+     (1<<(RACE_TAUREN-1))        | \
+     (1<<(RACE_GNOME-1))         | \
+     (1<<(RACE_TROLL-1))         | \
+     (1<<(RACE_BLOODELF-1))      | \
+     (1<<(RACE_DRAENEI-1))       | \
+     (1<<(RACE_GOBLIN-1))        | \
+     (1<<(RACE_WORGEN-1))        | \
+     (1<<(RACE_PANDAREN_NEUTRAL-1))  |\
+     (1<<(RACE_PANDAREN_ALLIANCE-1)) |\
+     (1<<(RACE_PANDAREN_HORDE-1)))
 
-#define RACEMASK_ALLIANCE \
-    ((1<<(RACE_HUMAN-1)) | (1<<(RACE_DWARF-1)) | (1<<(RACE_NIGHTELF-1)) | \
-     (1<<(RACE_GNOME-1)) | (1<<(RACE_DRAENEI-1)) | (1<<(RACE_WORGEN-1)))
+#define RACEMASK_NEUTRAL (1<<(RACE_PANDAREN_NEUTRAL-1))
+
+#define RACEMASK_ALLIANCE     \
+    ((1<<(RACE_HUMAN-1))    | \
+     (1<<(RACE_DWARF-1))    | \
+     (1<<(RACE_NIGHTELF-1)) | \
+     (1<<(RACE_GNOME-1))    | \
+     (1<<(RACE_DRAENEI-1))  | \
+     (1<<(RACE_WORGEN-1))   | \
+     (1<<(RACE_PANDAREN_ALLIANCE-1)))
 
 #define RACEMASK_HORDE RACEMASK_ALL_PLAYABLE & ~RACEMASK_ALLIANCE
 
@@ -119,18 +170,25 @@ enum Classes
     CLASS_SHAMAN        = 7,
     CLASS_MAGE          = 8,
     CLASS_WARLOCK       = 9,
-    //CLASS_UNK           = 10,
+    CLASS_MONK          = 10,
     CLASS_DRUID         = 11
 };
 
 // max+1 for player class
 #define MAX_CLASSES       12
 
-#define CLASSMASK_ALL_PLAYABLE \
-    ((1<<(CLASS_WARRIOR-1))|(1<<(CLASS_PALADIN-1))|(1<<(CLASS_HUNTER-1))| \
-    (1<<(CLASS_ROGUE-1))  |(1<<(CLASS_PRIEST-1)) |(1<<(CLASS_SHAMAN-1))| \
-    (1<<(CLASS_MAGE-1))   |(1<<(CLASS_WARLOCK-1))|(1<<(CLASS_DRUID-1)) | \
-    (1<<(CLASS_DEATH_KNIGHT-1)))
+#define CLASSMASK_ALL_PLAYABLE     \
+    ((1<<(CLASS_WARRIOR-1))      | \
+     (1<<(CLASS_PALADIN-1))      | \
+     (1<<(CLASS_HUNTER-1))       | \
+     (1<<(CLASS_ROGUE-1))        | \
+     (1<<(CLASS_PRIEST-1))       | \
+     (1<<(CLASS_DEATH_KNIGHT-1)) | \
+     (1<<(CLASS_SHAMAN-1))       | \
+     (1<<(CLASS_MAGE-1))         | \
+     (1<<(CLASS_WARLOCK-1))      | \
+     (1<<(CLASS_MONK-1))         | \
+     (1<<(CLASS_DRUID-1)))
 
 // valid classes for creature_template.unit_class
 enum UnitClass
@@ -143,7 +201,7 @@ enum UnitClass
 
 #define CLASSMASK_ALL_CREATURES ((1<<(UNIT_CLASS_WARRIOR-1)) | (1<<(UNIT_CLASS_PALADIN-1)) | (1<<(UNIT_CLASS_ROGUE-1)) | (1<<(UNIT_CLASS_MAGE-1)))
 
-#define CLASSMASK_WAND_USERS ((1<<(CLASS_PRIEST-1))|(1<<(CLASS_MAGE-1))|(1<<(CLASS_WARLOCK-1)))
+#define CLASSMASK_WAND_USERS ((1<<(CLASS_PRIEST-1)) | (1<<(CLASS_MAGE-1)) | (1<<(CLASS_WARLOCK-1)))
 
 #define PLAYER_MAX_BATTLEGROUND_QUEUES 2
 
@@ -748,12 +806,119 @@ enum SpellAttr10
     SPELL_ATTR10_ENFORCE_FACTING_ON_PRIMARY_TARGET = 0x80000000  // 31 Enforce Facing on Primary Target Only
 };
 
-#define MIN_TALENT_SPEC         0
-#define MAX_TALENT_SPEC         1
-#define MIN_TALENT_SPECS        1
-#define MAX_TALENT_SPECS        2
-#define MAX_GLYPH_SLOT_INDEX    9
-#define REQ_PRIMARY_TREE_TALENTS 31
+
+enum SpellAttr11 : uint32
+{
+    SPELL_ATTR11_UNK0                            = 0x00000001, // TITLE Unknown attribute 0@Attr11
+    SPELL_ATTR11_UNK1                            = 0x00000002, // TITLE Unknown attribute 1@Attr11
+    SPELL_ATTR11_SCALES_WITH_ITEM_LEVEL          = 0x00000004, // TITLE Scales with Casting Item's Level
+    SPELL_ATTR11_UNK3                            = 0x00000008, // TITLE Unknown attribute 3@Attr11
+    SPELL_ATTR11_UNK4                            = 0x00000010, // TITLE Unknown attribute 4@Attr11
+    SPELL_ATTR11_ABSORB_ENVIRONMENTAL_DAMAGE     = 0x00000020, // TITLE Absorb Falling Damage
+    SPELL_ATTR11_UNK6                            = 0x00000040, // TITLE Unknown attribute 6@Attr11
+    SPELL_ATTR11_RANK_IGNORES_CASTER_LEVEL       = 0x00000080, // TITLE Ignore Caster's spell level DESCRIPTION Spell_C_GetSpellRank returns SpellLevels->MaxLevel * 5 instead of std::min(SpellLevels->MaxLevel, caster->Level) * 5
+    SPELL_ATTR11_UNK8                            = 0x00000100, // TITLE Unknown attribute 8@Attr11
+    SPELL_ATTR11_UNK9                            = 0x00000200, // TITLE Unknown attribute 9@Attr11
+    SPELL_ATTR11_UNK10                           = 0x00000400, // TITLE Unknown attribute 10@Attr11
+    SPELL_ATTR11_NOT_USABLE_IN_INSTANCES         = 0x00000800, // TITLE Not in Instances
+    SPELL_ATTR11_UNK12                           = 0x00001000, // TITLE Unknown attribute 12@Attr11
+    SPELL_ATTR11_UNK13                           = 0x00002000, // TITLE Unknown attribute 13@Attr11
+    SPELL_ATTR11_UNK14                           = 0x00004000, // TITLE Unknown attribute 14@Attr11
+    SPELL_ATTR11_UNK15                           = 0x00008000, // TITLE Unknown attribute 15@Attr11
+    SPELL_ATTR11_NOT_USABLE_IN_CHALLENGE_MODE    = 0x00010000, // TITLE Not in Mythic+ Mode (Challenge Mode)
+    SPELL_ATTR11_UNK17                           = 0x00020000, // TITLE Unknown attribute 17@Attr11
+    SPELL_ATTR11_UNK18                           = 0x00040000, // TITLE Unknown attribute 18@Attr11
+    SPELL_ATTR11_UNK19                           = 0x00080000, // TITLE Unknown attribute 19@Attr11
+    SPELL_ATTR11_UNK20                           = 0x00100000, // TITLE Unknown attribute 20@Attr11
+    SPELL_ATTR11_UNK21                           = 0x00200000, // TITLE Unknown attribute 21@Attr11
+    SPELL_ATTR11_UNK22                           = 0x00400000, // TITLE Unknown attribute 22@Attr11
+    SPELL_ATTR11_UNK23                           = 0x00800000, // TITLE Unknown attribute 23@Attr11
+    SPELL_ATTR11_UNK24                           = 0x01000000, // TITLE Unknown attribute 24@Attr11
+    SPELL_ATTR11_UNK25                           = 0x02000000, // TITLE Unknown attribute 25@Attr11
+    SPELL_ATTR11_UNK26                           = 0x04000000, // TITLE Unknown attribute 26@Attr11
+    SPELL_ATTR11_UNK27                           = 0x08000000, // TITLE Unknown attribute 27@Attr11
+    SPELL_ATTR11_UNK28                           = 0x10000000, // TITLE Unknown attribute 28@Attr11
+    SPELL_ATTR11_UNK29                           = 0x20000000, // TITLE Unknown attribute 29@Attr11
+    SPELL_ATTR11_UNK30                           = 0x40000000, // TITLE Unknown attribute 30@Attr11
+    SPELL_ATTR11_UNK31                           = 0x80000000  // TITLE Unknown attribute 31@Attr11
+};
+
+enum SpellAttr12 : uint32
+{
+    SPELL_ATTR12_UNK0                            = 0x00000001, // TITLE Unknown attribute 0@Attr12
+    SPELL_ATTR12_UNK1                            = 0x00000002, // TITLE Unknown attribute 1@Attr12
+    SPELL_ATTR12_UNK2                            = 0x00000004, // TITLE Unknown attribute 2@Attr12
+    SPELL_ATTR12_UNK3                            = 0x00000008, // TITLE Unknown attribute 3@Attr12
+    SPELL_ATTR12_UNK4                            = 0x00000010, // TITLE Unknown attribute 4@Attr12
+    SPELL_ATTR12_UNK5                            = 0x00000020, // TITLE Unknown attribute 5@Attr12
+    SPELL_ATTR12_UNK6                            = 0x00000040, // TITLE Unknown attribute 6@Attr12
+    SPELL_ATTR12_UNK7                            = 0x00000080, // TITLE Unknown attribute 7@Attr12
+    SPELL_ATTR12_UNK8                            = 0x00000100, // TITLE Unknown attribute 8@Attr12
+    SPELL_ATTR12_IGNORE_CASTING_DISABLED         = 0x00000200, // TITLE Active Passive DESCRIPTION Ignores aura 263 SPELL_AURA_DISABLE_CASTING_EXCEPT_ABILITIES
+    SPELL_ATTR12_UNK10                           = 0x00000400, // TITLE Unknown attribute 10@Attr12
+    SPELL_ATTR12_UNK11                           = 0x00000800, // TITLE Unknown attribute 11@Attr12
+    SPELL_ATTR12_UNK12                           = 0x00001000, // TITLE Unknown attribute 12@Attr12
+    SPELL_ATTR12_UNK13                           = 0x00002000, // TITLE Unknown attribute 13@Attr12
+    SPELL_ATTR12_UNK14                           = 0x00004000, // TITLE Unknown attribute 14@Attr12
+    SPELL_ATTR12_UNK15                           = 0x00008000, // TITLE Unknown attribute 15@Attr12
+    SPELL_ATTR12_UNK16                           = 0x00010000, // TITLE Unknown attribute 16@Attr12
+    SPELL_ATTR12_UNK17                           = 0x00020000, // TITLE Unknown attribute 17@Attr12
+    SPELL_ATTR12_UNK18                           = 0x00040000, // TITLE Unknown attribute 18@Attr12
+    SPELL_ATTR12_UNK19                           = 0x00080000, // TITLE Unknown attribute 19@Attr12
+    SPELL_ATTR12_UNK20                           = 0x00100000, // TITLE Unknown attribute 20@Attr12
+    SPELL_ATTR12_UNK21                           = 0x00200000, // TITLE Unknown attribute 21@Attr12
+    SPELL_ATTR12_UNK22                           = 0x00400000, // TITLE Unknown attribute 22@Attr12
+    SPELL_ATTR12_START_COOLDOWN_ON_CAST_START    = 0x00800000, // TITLE Trigger Cooldown On Spell Start
+    SPELL_ATTR12_IS_GARRISON_BUFF                = 0x01000000, // TITLE Never Learn
+    SPELL_ATTR12_UNK25                           = 0x02000000, // TITLE Unknown attribute 25@Attr12
+    SPELL_ATTR12_UNK26                           = 0x04000000, // TITLE Unknown attribute 26@Attr12
+    SPELL_ATTR12_IS_READINESS_SPELL              = 0x08000000, // TITLE Recompute Aura on Mercenary Mode
+    SPELL_ATTR12_UNK28                           = 0x10000000, // TITLE Unknown attribute 28@Attr12
+    SPELL_ATTR12_UNK29                           = 0x20000000, // TITLE Unknown attribute 29@Attr12
+    SPELL_ATTR12_UNK30                           = 0x40000000, // TITLE Unknown attribute 30@Attr12
+    SPELL_ATTR12_ONLY_PROC_FROM_CLASS_ABILITIES                     = 0x80000000  // TITLE Only Proc From Class Abilities
+};
+
+enum SpellAttr13 : uint32
+{
+    SPELL_ATTR13_ALLOW_CLASS_ABILITY_PROCS                          = 0x00000001, // TITLE Allow Class Ability Procs
+    SPELL_ATTR13_UNK1                            = 0x00000002, // TITLE Unknown attribute 0@Attr13
+    SPELL_ATTR13_PASSIVE_IS_UPGRADE              = 0x00000004, // TITLE Is Upgrade DESCRIPTION Displays "Upgrade" in spell tooltip instead of "Passive"
+    SPELL_ATTR13_UNK3                            = 0x00000008, // TITLE Unknown attribute 3@Attr13
+    SPELL_ATTR13_UNK4                            = 0x00000010, // TITLE Unknown attribute 4@Attr13
+    SPELL_ATTR13_UNK5                            = 0x00000020, // TITLE Unknown attribute 5@Attr13
+    SPELL_ATTR13_UNK6                            = 0x00000040, // TITLE Unknown attribute 6@Attr13
+    SPELL_ATTR13_UNK7                            = 0x00000080, // TITLE Unknown attribute 7@Attr13
+    SPELL_ATTR13_UNK8                            = 0x00000100, // TITLE Unknown attribute 8@Attr13
+    SPELL_ATTR13_UNK9                            = 0x00000200, // TITLE Unknown attribute 9@Attr13
+    SPELL_ATTR13_UNK10                           = 0x00000400, // TITLE Unknown attribute 10@Attr13
+    SPELL_ATTR13_UNK11                           = 0x00000800, // TITLE Unknown attribute 11@Attr13
+    SPELL_ATTR13_UNK12                           = 0x00001000, // TITLE Unknown attribute 12@Attr13
+    SPELL_ATTR13_UNK13                           = 0x00002000, // TITLE Unknown attribute 13@Attr13
+    SPELL_ATTR13_UNK14                           = 0x00004000, // TITLE Unknown attribute 14@Attr13
+    SPELL_ATTR13_UNK15                           = 0x00008000, // TITLE Unknown attribute 15@Attr13
+    SPELL_ATTR13_UNK16                           = 0x00010000, // TITLE Unknown attribute 16@Attr13
+    SPELL_ATTR13_UNK17                           = 0x00020000, // TITLE Unknown attribute 17@Attr13
+    SPELL_ATTR13_ACTIVATES_REQUIRED_SHAPESHIFT   = 0x00040000, // TITLE Do Not Enforce Shapeshift Requirements
+    SPELL_ATTR13_UNK19                           = 0x00080000, // TITLE Unknown attribute 19@Attr13
+    SPELL_ATTR13_UNK20                           = 0x00100000, // TITLE Unknown attribute 20@Attr13
+    SPELL_ATTR13_UNK21                           = 0x00200000, // TITLE Unknown attribute 21@Attr13
+    SPELL_ATTR13_UNK22                           = 0x00400000, // TITLE Unknown attribute 22@Attr13
+    SPELL_ATTR13_UNK23                           = 0x00800000, // TITLE Unknown attribute 23@Attr13
+    SPELL_ATTR13_UNK24                           = 0x01000000, // TITLE Unknown attribute 24@Attr13
+    SPELL_ATTR13_UNK25                           = 0x02000000, // TITLE Unknown attribute 25@Attr13
+    SPELL_ATTR13_UNK26                           = 0x04000000, // TITLE Unknown attribute 26@Attr13
+    SPELL_ATTR13_UNK27                           = 0x08000000, // TITLE Unknown attribute 27@Attr13
+    SPELL_ATTR13_UNK28                           = 0x10000000, // TITLE Unknown attribute 28@Attr13
+    SPELL_ATTR13_UNK29                           = 0x20000000, // TITLE Unknown attribute 29@Attr13
+    SPELL_ATTR13_UNK30                           = 0x40000000, // TITLE Unknown attribute 30@Attr13
+    SPELL_ATTR13_UNK31                           = 0x80000000  // TITLE Unknown attribute 31@Attr13
+};
+
+#define MIN_SPECIALIZATION_LEVEL    10
+#define MAX_SPECIALIZATIONS         4
+#define PET_SPEC_OVERRIDE_CLASS_INDEX MAX_CLASSES
+#define INITIAL_SPECIALIZATION_INDEX 4
 
 // Custom values
 enum SpellClickUserTypes

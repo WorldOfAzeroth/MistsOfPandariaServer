@@ -67,6 +67,7 @@ TC_GAME_API extern DBCStorage <CreatureSpellDataEntry>       sCreatureSpellDataS
 TC_GAME_API extern DBCStorage <CreatureTypeEntry>            sCreatureTypeStore;
 TC_GAME_API extern DBCStorage <CurrencyTypesEntry>           sCurrencyTypesStore;
 TC_GAME_API extern DBCStorage <DestructibleModelDataEntry>   sDestructibleModelDataStore;
+TC_GAME_API extern DBCStorage<DifficultyEntry>               sDifficultyStore;
 TC_GAME_API extern DBCStorage <DungeonEncounterEntry>        sDungeonEncounterStore;
 TC_GAME_API extern DBCStorage <DurabilityCostsEntry>         sDurabilityCostsStore;
 TC_GAME_API extern DBCStorage <DurabilityQualityEntry>       sDurabilityQualityStore;
@@ -80,7 +81,7 @@ TC_GAME_API extern DBCStorage <GameObjectDisplayInfoEntry>   sGameObjectDisplayI
 TC_GAME_API extern DBCStorage <GemPropertiesEntry>           sGemPropertiesStore;
 TC_GAME_API extern DBCStorage <GlyphPropertiesEntry>         sGlyphPropertiesStore;
 TC_GAME_API extern DBCStorage <GlyphSlotEntry>               sGlyphSlotStore;
-
+TC_GAME_API extern DBCStorage <ChrSpecializationEntry>       sChrSpecializationStore;
 TC_GAME_API extern DBCStorage <GtBarberShopCostBaseEntry>    sGtBarberShopCostBaseStore;
 TC_GAME_API extern DBCStorage <GtCombatRatingsEntry>         sGtCombatRatingsStore;
 TC_GAME_API extern DBCStorage <GtChanceToMeleeCritBaseEntry> sGtChanceToMeleeCritBaseStore;
@@ -131,7 +132,6 @@ TC_GAME_API extern DBCStorage <MapEntry>                     sMapStore;
 TC_GAME_API extern DBCStorage <MountCapabilityEntry>         sMountCapabilityStore;
 TC_GAME_API extern DBCStorage <MountTypeEntry>               sMountTypeStore;
 //TC_GAME_API extern DBCStorage <NameGenEntry>                 sNameGenStore; -- use GetRandomCharacterName instead
-TC_GAME_API extern DBCStorage <NumTalentsAtLevelEntry>       sNumTalentsAtLevelStore;
 TC_GAME_API extern DBCStorage <PhaseEntry>                   sPhaseStore;
 TC_GAME_API extern DBCStorage <PhaseGroupEntry>              sPhaseGroupStore;
 TC_GAME_API extern DBCStorage <LightEntry>                   sLightStore;
@@ -156,6 +156,7 @@ TC_GAME_API extern DBCStorage <SkillLineEntry>               sSkillLineStore;
 TC_GAME_API extern DBCStorage <SkillLineAbilityEntry>        sSkillLineAbilityStore;
 TC_GAME_API extern DBCStorage <SkillTiersEntry>              sSkillTiersStore;
 TC_GAME_API extern DBCStorage <SoundEntriesEntry>            sSoundEntriesStore;
+TC_GAME_API extern DBCStorage <SpecializationSpellsEntry>    sSpecializationSpellsStore;
 TC_GAME_API extern DBCStorage <SpellCastTimesEntry>          sSpellCastTimesStore;
 TC_GAME_API extern DBCStorage <SpellCategoryEntry>           sSpellCategoryStore;
 TC_GAME_API extern DBCStorage <SpellDifficultyEntry>         sSpellDifficultyStore;
@@ -170,8 +171,6 @@ TC_GAME_API extern DBCStorage <SpellRuneCostEntry>           sSpellRuneCostStore
 TC_GAME_API extern DBCStorage <SpellShapeshiftEntry>         sSpellShapeshiftStore;
 TC_GAME_API extern DBCStorage <SpellShapeshiftFormEntry>     sSpellShapeshiftFormStore;
 TC_GAME_API extern DBCStorage <SpellEntry>                   sSpellStore;
-TC_GAME_API extern DBCStorage <SpellVisualEntry>             sSpellVisualStore;
-TC_GAME_API extern DBCStorage <SpellVisualKitEntry>          sSpellVisualKitStore;
 TC_GAME_API extern DBCStorage <SpellAuraOptionsEntry>        sSpellAuraOptionsStore;
 TC_GAME_API extern DBCStorage <SpellAuraRestrictionsEntry>   sSpellAuraRestrictionsStore;
 TC_GAME_API extern DBCStorage <SpellCastingRequirementsEntry> sSpellCastingRequirementsStore;
@@ -183,13 +182,12 @@ TC_GAME_API extern DBCStorage <SpellEquippedItemsEntry>      sSpellEquippedItems
 TC_GAME_API extern DBCStorage <SpellInterruptsEntry>         sSpellInterruptsStore;
 TC_GAME_API extern DBCStorage <SpellLevelsEntry>             sSpellLevelsStore;
 TC_GAME_API extern DBCStorage <SpellPowerEntry>              sSpellPowerStore;
-TC_GAME_API extern DBCStorage <SpellReagentsEntry>           sSpellReagentsStore;
 TC_GAME_API extern DBCStorage <SpellScalingEntry>            sSpellScalingStore;
+TC_GAME_API extern DBCStorage <SpellEffectScalingEntry>      sSpellEffectScalingStore;
 TC_GAME_API extern DBCStorage <SpellTargetRestrictionsEntry> sSpellTargetRestrictionsStore;
 TC_GAME_API extern DBCStorage <SpellTotemsEntry>             sSpellTotemsStore;
 TC_GAME_API extern DBCStorage <SummonPropertiesEntry>        sSummonPropertiesStore;
 TC_GAME_API extern DBCStorage <TalentEntry>                  sTalentStore;
-TC_GAME_API extern DBCStorage <TalentTabEntry>               sTalentTabStore;
 TC_GAME_API extern DBCStorage <TaxiNodesEntry>               sTaxiNodesStore;
 TC_GAME_API extern DBCStorage <TaxiPathEntry>                sTaxiPathStore;
 TC_GAME_API extern TaxiMask                                  sTaxiNodesMask;
@@ -210,6 +208,7 @@ TC_GAME_API extern DBCStorage <WorldMapAreaEntry>            sWorldMapAreaStore;
 TC_GAME_API extern DBCStorage <WorldMapOverlayEntry>         sWorldMapOverlayStore;
 TC_GAME_API extern DBCStorage <WorldSafeLocsEntry>           sWorldSafeLocsStore;
 
+
 class TC_GAME_API DBCManager
 {
 public:
@@ -219,8 +218,6 @@ public:
 
     SimpleFactionsList const* GetFactionTeamList(uint32 faction);
     static char const* GetPetName(uint32 petfamily, uint32 dbclang);
-    uint32 GetTalentSpellCost(uint32 spellId);
-    TalentSpellPos const* GetTalentSpellPos(uint32 spellId);
     static char const* GetRaceName(uint8 race, uint8 locale);
     static char const* GetClassName(uint8 class_, uint8 locale);
     WMOAreaTableEntry const* GetWMOAreaTableEntryByTripple(int32 rootid, int32 adtid, int32 groupid);
@@ -233,8 +230,6 @@ public:
     void Map2ZoneCoordinates(float &x, float &y, uint32 zone);
     MapDifficulty const* GetMapDifficultyData(uint32 mapId, Difficulty difficulty);
     MapDifficulty const* GetDownscaledMapDifficultyData(uint32 mapId, Difficulty &difficulty);
-    uint32 const* /*[MAX_TALENT_TABS]*/ GetTalentTabPages(uint8 cls);
-    std::vector<uint32> const* GetTalentTreePrimarySpells(uint32 talentTree);
     static uint32 GetLiquidFlags(uint32 liquidType);
     static uint32 GetDefaultMapLight(uint32 mapId);
     PvPDifficultyEntry const* GetBattlegroundBracketByLevel(uint32 mapid, uint32 level);
@@ -248,7 +243,11 @@ public:
     std::vector<SkillLineAbilityEntry const*> const* GetSkillLineAbilitiesBySkill(uint32 skillId) const;
     SkillRaceClassInfoEntry const* GetSkillRaceClassInfo(uint32 skill, uint8 race, uint8 class_);
     ResponseCodes ValidateName(std::wstring const& name, LocaleConstant locale);
-    EmotesTextSoundEntry const* FindTextSoundEmoteFor(uint32 emote, uint32 race, uint32 gender); 
+    EmotesTextSoundEntry const* FindTextSoundEmoteFor(uint32 emote, uint32 race, uint32 gender);
+    std::vector<TalentEntry const*> const& GetTalentsByPosition(uint32 class_, uint32 tier, uint32 column) const;
+    ChrSpecializationEntry const* GetChrSpecializationByIndex(uint32 class_, uint32 index) const;
+    ChrSpecializationEntry const* GetDefaultChrSpecializationForClass(uint32 class_) const;
+
 };
 
 #define sDBCManager DBCManager::Instance()

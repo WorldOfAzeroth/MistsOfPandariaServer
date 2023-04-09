@@ -229,7 +229,7 @@ void WorldSession::HandleGameObjectUseOpcode(WorldPacket& recvData)
     ObjectGuid guid;
     recvData >> guid;
 
-    TC_LOG_DEBUG("network", "WORLD: Recvd CMSG_GAMEOBJ_USE Message [%s]", guid.ToString().c_str());
+    TC_LOG_DEBUG("network", "WORLD: Recvd CMSG_GAME_OBJ_USE Message [%s]", guid.ToString().c_str());
 
     if (GameObject* obj = GetPlayer()->GetGameObjectIfCanInteractWith(guid))
     {
@@ -247,7 +247,7 @@ void WorldSession::HandleGameobjectReportUse(WorldPacket& recvPacket)
     ObjectGuid guid;
     recvPacket >> guid;
 
-    TC_LOG_DEBUG("network", "WORLD: Recvd CMSG_GAMEOBJ_REPORT_USE Message [%s]", guid.ToString().c_str());
+    TC_LOG_DEBUG("network", "WORLD: Recvd CMSG_GAME_OBJ_REPORT_USE Message [%s]", guid.ToString().c_str());
 
     // ignore for remote control state
     if (_player->IsCharming())
@@ -467,7 +467,7 @@ void WorldSession::HandleSpellClick(WorldPacket& recvData)
 
 void WorldSession::HandleMirrorImageDataRequest(WorldPacket& recvData)
 {
-    TC_LOG_DEBUG("network", "WORLD: CMSG_GET_MIRRORIMAGE_DATA");
+    TC_LOG_DEBUG("network", "WORLD: CMSG_GET_MIRROR_IMAGE_DATA");
     ObjectGuid guid;
     recvData >> guid;
     recvData.read_skip<uint32>(); // DisplayId ?

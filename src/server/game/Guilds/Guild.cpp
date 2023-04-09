@@ -1602,7 +1602,7 @@ void Guild::SendQueryResponse(WorldSession* session)
     }
 
     session->SendPacket(response.Write());
-    TC_LOG_DEBUG("guild", "SMSG_QUERY_GUILD_INFO_RESPONSE [%s]", session->GetPlayerInfo().c_str());
+    TC_LOG_DEBUG("guild", "SMSG_GUILD_QUERY_INFO_RESPONSE [%s]", session->GetPlayerInfo().c_str());
 }
 
 void Guild::SendGuildRankInfo(WorldSession* session) const

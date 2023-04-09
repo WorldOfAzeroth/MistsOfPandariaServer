@@ -21,6 +21,7 @@
 #include "SharedDefines.h"
 #include "Util.h"
 #include "DBCStructure.h"
+#include "DB2Structure.h"
 #include "Object.h"
 #include "SpellAuraDefines.h"
 #include "SpellDefines.h"
@@ -124,7 +125,7 @@ enum SpellTargetCheckTypes : uint8
     TARGET_CHECK_PASSENGER,
     TARGET_CHECK_SUMMONED,
     TARGET_CHECK_THREAT,
-    TARGET_CHECK_TAP,
+    TARGET_CHECK_TAP
 };
 
 enum SpellTargetDirectionTypes
@@ -264,7 +265,7 @@ public:
     uint32    ChainTarget;
     uint32    ItemType;
     uint32    TriggerSpell;
-    flag96    SpellClassMask;
+    flag128   SpellClassMask;
     std::vector<Condition*>* ImplicitTargetConditions;
     // SpellScalingEntry
     struct
@@ -353,6 +354,9 @@ class TC_GAME_API SpellInfo
         uint32 AttributesEx8;
         uint32 AttributesEx9;
         uint32 AttributesEx10;
+        uint32 AttributesEx11;
+        uint32 AttributesEx12;
+        uint32 AttributesEx13;
         uint32 AttributesCu;
         uint64 Stances;
         uint64 StancesNot;
@@ -411,7 +415,7 @@ class TC_GAME_API SpellInfo
         uint32 MaxTargetLevel;
         uint32 MaxAffectedTargets;
         uint32 SpellFamilyName;
-        flag96 SpellFamilyFlags;
+        flag128 SpellFamilyFlags;
         uint32 DmgClass;
         uint32 PreventionType;
         int32  AreaGroupId;
@@ -433,6 +437,7 @@ class TC_GAME_API SpellInfo
         uint32 SpellShapeshiftId;
         uint32 SpellTargetRestrictionsId;
         uint32 SpellTotemsId;
+        uint32 SpellMiscId;
         uint32 ResearchProjectId;
         // SpellScalingEntry
         struct
@@ -443,6 +448,8 @@ class TC_GAME_API SpellInfo
             int32 Class;
             float NerfFactor;
             int32 NerfMaxLevel;
+            uint32 MaxScalingLevel;
+            uint32 ScalesFromItemLevel;
         } Scaling;
 
         SpellEffectInfo Effects[MAX_SPELL_EFFECTS];
@@ -465,6 +472,7 @@ class TC_GAME_API SpellInfo
         SpellScalingEntry const* GetSpellScaling() const;
         SpellShapeshiftEntry const* GetSpellShapeshift() const;
         SpellTotemsEntry const* GetSpellTotems() const;
+        SpellMiscEntry const* GetSpellMisc() const;
 
         SpellInfo(SpellEntry const* spellEntry, SpellEffectEntry const** effects);
         ~SpellInfo();
@@ -486,6 +494,9 @@ class TC_GAME_API SpellInfo
         inline bool HasAttribute(SpellAttr8 attribute)  const { return !!(AttributesEx8 & attribute); }
         inline bool HasAttribute(SpellAttr9 attribute)  const { return !!(AttributesEx9 & attribute); }
         inline bool HasAttribute(SpellAttr10 attribute) const { return !!(AttributesEx10 & attribute); }
+        inline bool HasAttribute(SpellAttr11 attribute) const { return !!(AttributesEx11 & attribute); }
+        inline bool HasAttribute(SpellAttr12 attribute) const { return !!(AttributesEx12 & attribute); }
+        inline bool HasAttribute(SpellAttr13 attribute) const { return !!(AttributesEx13 & attribute); }
         inline bool HasAttribute(SpellCustomAttributes customAttribute) const { return !!(AttributesCu & customAttribute); }
 
         bool CanBeInterrupted(Unit const* interruptTarget, bool ignoreImmunity = false) const;
@@ -539,7 +550,7 @@ class TC_GAME_API SpellInfo
 
         WeaponAttackType GetAttackType() const;
 
-        bool IsAffected(uint32 familyName, flag96 const& familyFlags) const;
+        bool IsAffected(uint32 familyName, flag128 const& familyFlags) const;
 
         bool IsAffectedBySpellMods() const;
         bool IsAffectedBySpellMod(SpellModifier const* mod) const;

@@ -549,9 +549,7 @@ void Player::UpdateMastery()
     value += GetRatingBonusValue(CR_MASTERY);
     SetFloatValue(PLAYER_MASTERY, value);
 
-    TalentTabEntry const* talentTab = sTalentTabStore.LookupEntry(GetPrimaryTalentTree(GetActiveSpec()));
-    if (!talentTab)
-        return;
+
 
     for (uint32 i = 0; i < MAX_MASTERY_SPELLS; ++i)
     {
@@ -834,7 +832,7 @@ void Player::UpdatePowerRegeneration(Powers powerType)
         {
             // Formular: base cooldown / (1 - haste)
             float regeneration = 0.1f;
-            float haste = GetFloatValue(PLAYER_FIELD_MOD_HASTE_REGEN);
+            float haste = GetFloatValue(UNIT_FIELD_MOD_HASTE_REGEN);
             if (haste != 0.f)
                 regeneration /= haste;
 

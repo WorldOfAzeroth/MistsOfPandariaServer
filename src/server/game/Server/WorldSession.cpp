@@ -1366,8 +1366,8 @@ uint32 WorldSession::DosProtection::GetMaxPacketCounterAllowed(uint16 opcode) co
         case CMSG_QUEST_GIVER_STATUS_QUERY:             //   0               1.5
         case CMSG_GUILD_QUERY:                          //   0               1.5
         case CMSG_ARENA_TEAM_QUERY:                     //   0               1.5
-        case CMSG_TAXINODE_STATUS_QUERY:                //   0               1.5
-        case CMSG_TAXIQUERYAVAILABLENODES:              //   0               1.5
+        case CMSG_TAXI_NODE_STATUS_QUERY:               //   0               1.5
+        case CMSG_TAXI_QUERY_AVAILABLE_NODES:           //   0               1.5
         case CMSG_QUEST_GIVER_QUERY_QUEST:              //   0               1.5
         case CMSG_PAGE_TEXT_QUERY:                      //   0               1.5
         case CMSG_GUILD_BANK_TEXT_QUERY:                //   0               1.5
@@ -1380,8 +1380,8 @@ uint32 WorldSession::DosProtection::GetMaxPacketCounterAllowed(uint16 opcode) co
         case CMSG_HEARTH_AND_RESURRECT:                 //   0               1.5
         case CMSG_TOGGLE_PVP:                           //   0               1.5
         case CMSG_PET_ABANDON:                          //   0               1.5
-        case CMSG_ACTIVATETAXIEXPRESS:                  //   0               1.5
-        case CMSG_ACTIVATETAXI:                         //   0               1.5
+        case CMSG_ACTIVATE_TAXI_EXPRESS:                  //   0               1.5
+        case CMSG_ACTIVATE_TAXI:                         //   0               1.5
         case CMSG_SELF_RES:                             //   0               1.5
         case CMSG_UNLEARN_SKILL:                        //   0               1.5
         case CMSG_EQUIPMENT_SET_SAVE:                   //   0               1.5
@@ -1425,9 +1425,9 @@ uint32 WorldSession::DosProtection::GetMaxPacketCounterAllowed(uint16 opcode) co
         case CMSG_MESSAGECHAT_YELL:                     //   0               3.5
         case CMSG_INSPECT:                              //   0               3.5
         case CMSG_AREA_SPIRIT_HEALER_QUERY:             // not profiled
-        case CMSG_STANDSTATECHANGE:                     // not profiled
+        case CMSG_STAND_STATE_CHANGE:                     // not profiled
         case MSG_RANDOM_ROLL:                           // not profiled
-        case CMSG_TIME_SYNC_RESP:                       // not profiled
+        case CMSG_TIME_SYNC_RESPONSE:                       // not profiled
         case CMSG_TRAINER_BUY_SPELL:                    // not profiled
         {
             // "0" is a magic number meaning there's no limit for the opcode.
@@ -1458,8 +1458,8 @@ uint32 WorldSession::DosProtection::GetMaxPacketCounterAllowed(uint16 opcode) co
         case CMSG_GUILD_BANK_QUERY_TAB:                 //   0               3.5       medium upload bandwidth usage
         case CMSG_QUERY_INSPECT_ACHIEVEMENTS:           //   0              13         high upload bandwidth usage
         case CMSG_GUILD_QUERY_RECIPES:                  // not profiled
-        case CMSG_GAMEOBJ_REPORT_USE:                   // not profiled
-        case CMSG_GAMEOBJ_USE:                          // not profiled
+        case CMSG_GAME_OBJ_REPORT_USE:                   // not profiled
+        case CMSG_GAME_OBJ_USE:                          // not profiled
         case MSG_PETITION_DECLINE:                      // not profiled
         {
             maxPacketCounterAllowed = 50;
@@ -1484,9 +1484,8 @@ uint32 WorldSession::DosProtection::GetMaxPacketCounterAllowed(uint16 opcode) co
         case CMSG_TURN_IN_PETITION:                     //   8               5.5       2 sync db query
         case CMSG_GROUP_CHANGE_SUB_GROUP:               //   6               5         1 sync 1 async db queries
         case CMSG_PETITION_QUERY:                       //   4               3.5       1 sync db query
-        case CMSG_CHAR_RACE_CHANGE:                     //   5               4         1 sync db query
+        case CMSG_CHAR_FACTION_OR_RACE_CHANGE:          //   5               4         1 sync db query
         case CMSG_CHAR_CUSTOMIZE:                       //   5               5         1 sync db query
-        case CMSG_CHAR_FACTION_CHANGE:                  //   5               5         1 sync db query
         case CMSG_CHAR_DELETE:                          //   4               4         1 sync db query
         case CMSG_DEL_FRIEND:                           //   7               5         1 async db query
         case CMSG_ADD_FRIEND:                           //   6               4         1 async db query
@@ -1518,9 +1517,9 @@ uint32 WorldSession::DosProtection::GetMaxPacketCounterAllowed(uint16 opcode) co
 
         case CMSG_CHAR_CREATE:                          //   7               5         3 async db queries
         case CMSG_ENUM_CHARACTERS:                      //  22               3         2 async db queries
-        case CMSG_GMTICKET_CREATE:                      //   1              25         1 async db query
-        case CMSG_GMTICKET_UPDATETEXT:                  //   0              15         1 async db query
-        case CMSG_GMTICKET_DELETETICKET:                //   1              25         1 async db query
+        case CMSG_GM_TICKET_CREATE:                      //   1              25         1 async db query
+        case CMSG_GM_TICKET_UPDATE_TEXT:                  //   0              15         1 async db query
+        case CMSG_GM_TICKET_DELETE_TICKET:                //   1              25         1 async db query
         case CMSG_GMRESPONSE_RESOLVE:                   //   1              25         1 async db query
         case CMSG_CALENDAR_UPDATE_EVENT:                // not profiled
         case CMSG_CALENDAR_REMOVE_EVENT:                // not profiled

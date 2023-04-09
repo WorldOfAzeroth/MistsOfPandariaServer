@@ -68,7 +68,7 @@ void WorldSession::SendAuctionHello(ObjectGuid guid, Creature* unit)
     if (!ahEntry)
         return;
 
-    WorldPacket data(MSG_AUCTION_HELLO, 12);
+    WorldPacket data(SMSG_AUCTION_HELLO, 12);
     data << uint64(guid);
     data << uint32(ahEntry->ID);
     data << uint8(1);                                       // 3.3.3: 1 - AH enabled, 0 - AH disabled

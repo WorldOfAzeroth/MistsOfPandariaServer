@@ -131,7 +131,7 @@ namespace WorldPackets
         class MoveTeleport final : public ServerPacket
         {
         public:
-            MoveTeleport() : ServerPacket(OpcodeServer(MSG_MOVE_TELEPORT), 12 + 4 + 8 + 8 + 4) { }
+            MoveTeleport() : ServerPacket(OpcodeServer(SMSG_MOVE_TELEPORT), 12 + 4 + 8 + 8 + 4) { }
 
             WorldPacket const* Write() override;
 
@@ -146,7 +146,7 @@ namespace WorldPackets
         class MoveTeleportAck final : public ClientPacket
         {
         public:
-            MoveTeleportAck(WorldPacket&& packet) : ClientPacket(OpcodeClient(MSG_MOVE_TELEPORT_ACK), std::move(packet)) { }
+            MoveTeleportAck(WorldPacket&& packet) : ClientPacket(OpcodeClient(CMSG_MOVE_TELEPORT_ACK), std::move(packet)) { }
 
             void Read() override;
 

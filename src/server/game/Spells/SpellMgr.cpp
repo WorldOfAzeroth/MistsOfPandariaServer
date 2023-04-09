@@ -200,7 +200,7 @@ uint32 SpellMgr::GetSpellIdForDifficulty(uint32 spellId, WorldObject const* cast
         return spellId; //return source spell
     }
 
-    if (difficultyEntry->DifficultySpellID[mode] <= 0 && mode > DUNGEON_DIFFICULTY_HEROIC)
+    if (difficultyEntry->DifficultySpellID[mode] <= 0 && mode > DIFFICULTY_10_HC)
     {
         TC_LOG_DEBUG("spells", "SpellMgr::GetSpellIdForDifficulty: spell %u mode %u spell is nullptr, using mode %u", spellId, mode, mode - 2);
         mode -= 2;
@@ -778,63 +778,7 @@ void SpellMgr::UnloadSpellInfoChains()
 
 void SpellMgr::LoadSpellTalentRanks()
 {
-    // cleanup core data before reload - remove reference to ChainNode from SpellInfo
-    UnloadSpellInfoChains();
-
-    for (uint32 i = 0; i < sTalentStore.GetNumRows(); ++i)
-    {
-        TalentEntry const* talentInfo = sTalentStore.LookupEntry(i);
-        if (!talentInfo)
-            continue;
-
-        SpellInfo const* lastSpell = nullptr;
-        for (uint8 rank = MAX_TALENT_RANK - 1; rank > 0; --rank)
-        {
-            if (talentInfo->SpellRank[rank])
-            {
-                lastSpell = GetSpellInfo(talentInfo->SpellRank[rank]);
-                break;
-            }
-        }
-
-        if (!lastSpell)
-            continue;
-
-        SpellInfo const* firstSpell = GetSpellInfo(talentInfo->SpellRank[0]);
-        if (!firstSpell)
-        {
-            TC_LOG_ERROR("spells", "SpellMgr::LoadSpellTalentRanks: First Rank Spell %u for TalentEntry %u does not exist.", talentInfo->SpellRank[0], i);
-            continue;
-        }
-
-        SpellInfo const* prevSpell = nullptr;
-        for (uint8 rank = 0; rank < MAX_TALENT_RANK; ++rank)
-        {
-            uint32 spellId = talentInfo->SpellRank[rank];
-            if (!spellId)
-                break;
-
-            SpellInfo const* currentSpell = GetSpellInfo(spellId);
-            if (!currentSpell)
-            {
-                TC_LOG_ERROR("spells", "SpellMgr::LoadSpellTalentRanks: Spell %u (Rank: %u) for TalentEntry %u does not exist.", spellId, rank + 1, i);
-                break;
-            }
-
-            SpellChainNode node;
-            node.first = firstSpell;
-            node.last  = lastSpell;
-            node.rank  = rank + 1;
-
-            node.prev = prevSpell;
-            node.next = node.rank < MAX_TALENT_RANK ? GetSpellInfo(talentInfo->SpellRank[node.rank]) : nullptr;
-
-            mSpellChains[spellId] = node;
-            mSpellInfoMap[spellId]->ChainEntry = &mSpellChains[spellId];
-
-            prevSpell = currentSpell;
-        }
-    }
+    // Remove Me
 }
 
 void SpellMgr::LoadSpellRanks()
@@ -1164,9 +1108,7 @@ void SpellMgr::LoadSpellLearnSpells()
     uint32 mastery_count = 0;
     for (uint32 i = 0; i < sTalentTabStore.GetNumRows(); ++i)
     {
-        TalentTabEntry const* talentTab = sTalentTabStore.LookupEntry(i);
-        if (!talentTab)
-            continue;
+
 
         for (uint32 c = CLASS_WARRIOR; c < MAX_CLASSES; ++c)
         {
@@ -3245,7 +3187,7 @@ void SpellMgr::LoadSpellInfoCorrections()
     // Wrecking Crew
     ApplySpellFix({ 46867, 56611, 56612 }, [](SpellInfo* spellInfo)
     {
-        spellInfo->Effects[EFFECT_0].SpellClassMask = flag96(0x02000000, 0, 0);
+        spellInfo->Effects[EFFECT_0].SpellClassMask = flag128(0x02000000, 0, 0);
     });
 
     // Death and Decay
@@ -3374,7 +3316,7 @@ void SpellMgr::LoadSpellInfoCorrections()
         53243, // (Rank 2)
     }, [](SpellInfo* spellInfo)
     {
-        spellInfo->Effects[EFFECT_0].SpellClassMask = flag96(0x00067801, 0x10820001, 0x00000801);
+        spellInfo->Effects[EFFECT_0].SpellClassMask = flag128(0x00067801, 0x10820001, 0x00000801);
     });
 
     ApplySpellFix({
@@ -3400,13 +3342,13 @@ void SpellMgr::LoadSpellInfoCorrections()
         // this is done because another spell also uses the same SpellFamilyFlags as Icy Touch
         // SpellFamilyFlags[0] & 0x00000040 in SPELLFAMILY_DEATHKNIGHT is currently unused (3.3.5a)
         // this needs research on modifier applying rules, does not seem to be in Attributes fields
-        spellInfo->Effects[EFFECT_0].SpellClassMask = flag96(0x00000040, 0x00000000, 0x00000000);
+        spellInfo->Effects[EFFECT_0].SpellClassMask = flag128(0x00000040, 0x00000000, 0x00000000);
     });
 
     // Idol of the Flourishing Life
     ApplySpellFix({ 64949 }, [](SpellInfo* spellInfo)
     {
-        spellInfo->Effects[EFFECT_0].SpellClassMask = flag96(0x00000000, 0x02000000, 0x00000000);
+        spellInfo->Effects[EFFECT_0].SpellClassMask = flag128(0x00000000, 0x02000000, 0x00000000);
         spellInfo->Effects[EFFECT_0].ApplyAuraName = SPELL_AURA_ADD_FLAT_MODIFIER;
     });
 
@@ -3416,7 +3358,7 @@ void SpellMgr::LoadSpellInfoCorrections()
         64956  // Libram of the Resolute
     }, [](SpellInfo* spellInfo)
     {
-        spellInfo->Effects[EFFECT_0].SpellClassMask = flag96(0x80000000, 0x00000000, 0x00000000);
+        spellInfo->Effects[EFFECT_0].SpellClassMask = flag128(0x80000000, 0x00000000, 0x00000000);
         spellInfo->Effects[EFFECT_0].ApplyAuraName = SPELL_AURA_ADD_FLAT_MODIFIER;
     });
 
@@ -3426,7 +3368,7 @@ void SpellMgr::LoadSpellInfoCorrections()
         32403  // Blessed Book of Nagrand
     }, [](SpellInfo* spellInfo)
     {
-        spellInfo->Effects[EFFECT_0].SpellClassMask = flag96(0x40000000, 0x00000000, 0x00000000);
+        spellInfo->Effects[EFFECT_0].SpellClassMask = flag128(0x40000000, 0x00000000, 0x00000000);
         spellInfo->Effects[EFFECT_0].ApplyAuraName = SPELL_AURA_ADD_FLAT_MODIFIER;
     });
 
@@ -3480,7 +3422,7 @@ void SpellMgr::LoadSpellInfoCorrections()
         47134  // Quest Complete
     }, [](SpellInfo* spellInfo)
     {
-        //! HACK: This spell break quest complete for alliance and on retail not used °_O
+        //! HACK: This spell break quest complete for alliance and on retail not used ï¿½_O
         spellInfo->Effects[EFFECT_0].Effect = 0;
     });
 

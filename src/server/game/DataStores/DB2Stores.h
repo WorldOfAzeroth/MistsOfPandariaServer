@@ -29,6 +29,9 @@ TC_GAME_API extern DB2Storage<ItemCurrencyCostEntry>    sItemCurrencyCostStore;
 TC_GAME_API extern DB2Storage<ItemExtendedCostEntry>    sItemExtendedCostStore;
 TC_GAME_API extern DB2Storage<ItemSparseEntry>          sItemSparseStore;
 TC_GAME_API extern DB2Storage<KeyChainEntry>            sKeyChainStore;
+TC_GAME_API extern DB2Storage<SpellReagentsEntry>       sSpellReagentsStore;
+TC_GAME_API extern DB2Storage<SpellVisualEntry>         sSpellVisualStore;
+TC_GAME_API extern DB2Storage<SpellVisualKitEntry>      sSpellVisualKitStore;
 
 struct HotfixNotify
 {

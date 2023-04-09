@@ -466,23 +466,6 @@ namespace WorldPackets
             std::array<int8, 3> Talents = { };
         };
 
-        class LFGSearchResults final : public ServerPacket
-        {
-        public:
-            LFGSearchResults() : ServerPacket(SMSG_LFG_SEARCH_RESULT, 4) { }
-
-            WorldPacket const* Write() override;
-
-            bool Incremental = false;
-            std::vector<ObjectGuid> Removes;
-            RideTicket Ticket;
-            uint32 SlotID = 0;
-            uint32 CountTotalParties = 0;
-            uint32 CountTotalPlayers = 0;
-            uint32 SlotType = 0;
-            std::vector<ClientLFGSearchResultParty> Parties;
-            std::vector<ClientLFGSearchResultPlayer> Players;
-        };
     }
 }
 
